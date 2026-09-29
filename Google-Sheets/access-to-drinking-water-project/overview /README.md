@@ -20,8 +20,10 @@ The project is divided into two main parts:
 - Google Sheets
 - Excel (Data Cleaning, Formulas, Pivot Tables, Charts)
 
-## Files
-
+## Project Files
+- [Part 1 – Preparing Data](../part-1-Preparing-Data/)
+  
+- [Part 2 – Transforming Data](../part-2-Transforming-Data/)
 
 ## Glossary
 - **SDG**: Sustainable Development Goal  
