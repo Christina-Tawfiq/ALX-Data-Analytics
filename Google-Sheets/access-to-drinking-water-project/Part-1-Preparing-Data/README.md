@@ -36,7 +36,7 @@ The dataset includes population estimates, urban/rural distribution, service lev
 
 ## Part 1 Files
 
-- [View Part 1 – Preparing Data – Google Sheets](https://docs.google.com/spreadsheets/d/1hnKiyyvtD9Fu4pFC99G-85hFez5bv7qaPcxG6alWCwQ/edit?usp=sharing)
+- [View Part 1 – PREPARING DATA – Google Sheets](https://docs.google.com/spreadsheets/d/1hnKiyyvtD9Fu4pFC99G-85hFez5bv7qaPcxG6alWCwQ/edit?usp=sharing)
 
 - [Raw Data](./Raw-Data/)
   
