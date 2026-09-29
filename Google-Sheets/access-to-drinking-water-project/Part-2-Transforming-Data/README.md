@@ -43,7 +43,7 @@ We also examined how **Gross National Income (GNI)** interacts with ARC to highl
 
 ## Part 2 Files
 
-- [TRANSFORMING DATA 2 – Google Sheets](https://docs.google.com/spreadsheets/d/14j_BLFagojlPHK0S3b5W8C0IQHYjBErq_cFmQGQQTJo/edit?usp=sharing)
+- [View Part 2 – TRANSFORMING DATA – Google Sheets](https://docs.google.com/spreadsheets/d/14j_BLFagojlPHK0S3b5W8C0IQHYjBErq_cFmQGQQTJo/edit?usp=sharing)
   
 - [Raw Data](./Raw-Data/)
 
