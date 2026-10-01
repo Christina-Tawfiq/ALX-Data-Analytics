@@ -4,6 +4,12 @@
 In this first part, we cleaned and prepared WHO/UNICEF JMP data to make it suitable for analysis.  
 The dataset includes population estimates, urban/rural distribution, service levels (safely managed, basic, limited, unimproved, surface water), and economic indicators such as **Gross National Income (GNI)**.
 
+## Part 1 Files
+
+- [View Part 1 – PREPARING DATA – Google Sheets](https://docs.google.com/spreadsheets/d/1hnKiyyvtD9Fu4pFC99G-85hFez5bv7qaPcxG6alWCwQ/edit?usp=sharing)
+
+- [Raw Data](./Raw-Data/)
+
 ## What We Did
 - Imported raw JMP dataset into Google Sheets.
 - Cleaned missing values and handled inconsistencies.
@@ -33,12 +39,6 @@ The dataset includes population estimates, urban/rural distribution, service lev
 ## Tools
 - Google Sheets
 - Excel (Data Cleaning, Formulas)
-
-## Part 1 Files
-
-- [View Part 1 – PREPARING DATA – Google Sheets](https://docs.google.com/spreadsheets/d/1hnKiyyvtD9Fu4pFC99G-85hFez5bv7qaPcxG6alWCwQ/edit?usp=sharing)
-
-- [Raw Data](./Raw-Data/)
   
 ## Glossary
 - **JMP**: Joint Monitoring Programme (WHO/UNICEF)  
