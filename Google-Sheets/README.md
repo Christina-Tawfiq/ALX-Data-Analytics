@@ -10,4 +10,5 @@ A data analysis project exploring inequalities in access to safe and affordable 
 Project Parts:
 
 Part 1 – Preparing Data
+
 Part 2 – Transforming Data
