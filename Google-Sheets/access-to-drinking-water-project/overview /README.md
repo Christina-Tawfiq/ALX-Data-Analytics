@@ -4,6 +4,11 @@
 This integrated project investigates inequalities in access to safe and affordable drinking water, aligned with **United Nations Sustainable Development Goal 6 (SDG 6: Clean Water and Sanitation)**.  
 The analysis uses **WHO/UNICEF Joint Monitoring Programme (JMP)** data (2000–2020) to explore differences between national, rural, and urban populations, and to measure progress toward achieving SDG 6.
 
+## Project Files
+- [Part 1 – Preparing Data](../Part-1-Preparing-Data/)
+  
+- [Part 2 – Transforming Data](../Part-2-Transforming-Data/)
+
 ## Project Structure
 The project is divided into two main parts:
 - **Part 1: Preparing Data** → Cleaning and structuring the dataset.
@@ -19,11 +24,6 @@ The project is divided into two main parts:
 ## Tools
 - Google Sheets
 - Excel (Data Cleaning, Formulas, Pivot Tables, Charts)
-
-## Project Files
-- [Part 1 – Preparing Data](../Part-1-Preparing-Data/)
-  
-- [Part 2 – Transforming Data](../Part-2-Transforming-Data/)
 
 ## Glossary
 - **SDG**: Sustainable Development Goal  
