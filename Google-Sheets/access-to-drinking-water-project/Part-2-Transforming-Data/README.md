@@ -5,6 +5,12 @@ In this second part, we transformed the dataset to investigate changes in access
 We engineered new features, calculated **Annual Rates of Change (ARC)**, and compared progress across national, rural, and urban populations, as well as regions.  
 We also examined how **Gross National Income (GNI)** interacts with ARC to highlight the relationship between economic growth and improvements in water access.
 
+## Part 2 Files
+
+- [View Part 2 – TRANSFORMING DATA – Google Sheets](https://docs.google.com/spreadsheets/d/14j_BLFagojlPHK0S3b5W8C0IQHYjBErq_cFmQGQQTJo/edit?usp=sharing)
+  
+- [Raw Data](./Raw-Data/)
+
 ## What We Did
 - Imported JMP dataset (2000–2020).
 - Sorted data by country and year to ensure consistency.
@@ -40,12 +46,6 @@ We also examined how **Gross National Income (GNI)** interacts with ARC to highl
 ## Tools
 - Google Sheets
 - Excel (Formulas, Pivot Tables, Charts)
-
-## Part 2 Files
-
-- [View Part 2 – TRANSFORMING DATA – Google Sheets](https://docs.google.com/spreadsheets/d/14j_BLFagojlPHK0S3b5W8C0IQHYjBErq_cFmQGQQTJo/edit?usp=sharing)
-  
-- [Raw Data](./Raw-Data/)
 
 ## Glossary
 - **ARC**: Annual Rate of Change  
