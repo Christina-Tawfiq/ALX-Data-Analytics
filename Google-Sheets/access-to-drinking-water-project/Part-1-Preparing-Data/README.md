@@ -1,63 +1,60 @@
 # Access to Drinking Water | Part 1: Understanding the Data
 
 ## Overview
-In this first part, we cleaned and prepared WHO/UNICEF JMP data to make it suitable for analysis.  
-The dataset includes population estimates, urban/rural distribution, service levels (safely managed, basic, limited, unimproved, surface water), and economic indicators such as **Gross National Income (GNI)**.
+Part 1 prepares and investigates the WHO/UNICEF JMP 2020 drinking-water dataset. The analysis moves from data cleaning and population validation to descriptive analysis of water-service access across national, rural, urban, population-size, and income-group dimensions.
 
 ## Purpose
-Part 1 builds and validates the 2020 analytical snapshot, then explores how drinking-water access varies by area type, population characteristics, and income group.
+The objective is to build a reliable 2020 analytical snapshot and identify the main inequalities hidden behind global access averages.
 
 ## Part 1 Files
 
 - [View Part 1 – PREPARING DATA – Google Sheets](https://docs.google.com/spreadsheets/d/1hnKiyyvtD9Fu4pFC99G-85hFez5bv7qaPcxG6alWCwQ/edit?usp=sharing)
 
-- [Raw Data](./Raw-Data/)
+- [Raw Data](./Raw-Data/) WHO/UNICEF JMP Estimates on the Use of Water (2020)
+- [Analyzed Data](./Analyzed_Data/)
+- [Screenshots](./Screenshots/)  Visualisations are stored separately in the project screenshots folder.
 
-## Required workflow covered
-The project instructions require the following sequence:
+## Analytical Workflow
+1. Imported the raw 2020 JMP dataset.
+2. Repaired inconsistent separators so the original 16 variables were correctly separated.
+3. Used `value_cnt` with `COUNTA()` to identify rows that did not contain the expected 16 populated cells during the import-cleaning process.
+4. Handled missing values represented by `NAN` without treating them as zeros.
+5. Created derived population features, including:
+   - `pop_n_actual`
+   - `pop_u_val`
+   - `pop_r%`
+   - `pop_n (m)`
+   - rounded population and access fields used in grouped analysis
+6. Built the Global 2020 Report to compare dataset population coverage with the project world-population reference.
+7. Summarised the central tendency and spread of the 12 national, rural, and urban service-level variables.
+8. Compared drinking-water access by area, population size, and income group.
 
-1. Import and repair the dataset so the original 16 features are correctly separated.
-2. Check row completeness with a `value_cnt` approach when repairing import problems.
-3. Create population features such as actual national population, urban population value, rural share, and rounded population measures.
-4. Compare the dataset population with the 2020 world-population reference in a Global 2020 Report.
-5. Calculate central tendency and spread for the 12 national/rural/urban service-level measures.
-6. Visualize urban versus rural population shares, water access by population size, and the five-number summaries.
-7. Group countries by income category and compare population, urbanisation, and national water-access measures.
+## Key Questions
+- How does the dataset population compare with the estimated world population?
+- How does the urban population share compare with the rural population?
+- What are the central tendency and spread of the water-access variables?
+- How does water access differ between national, rural, and urban areas?
+- How does access vary across population-size groups?
+- How does access vary across income groups?
 
-## What We Did
-- Imported raw JMP dataset into Google Sheets.
-- Cleaned missing values and handled inconsistencies.
-- Created new features:
-  - Rounded service levels (`wat_bas_n (rounded)`).
-  - Population splits (urban vs rural).
-  - Actual population values (`pop_n_actual`, `pop_u_val`).
-- Integrated **GNI data** to explore how economic development influences water access.
+## Dataset Snapshot
+The analytical workbook contains **213 country/area observations**.
 
-## Key Questions Answered
-- How do the world population estimates compare to the provided dataset populations?
-- How does the urban population share compare to the rural population?
-- What is the tendency and spread of the different water access features?
-- How do these measures of water access compare across different types of areas?
-- What does the national access to water look like based on national population size?
-- What does the urban access to water look like based on urban population size?
-- What does the rural access look like?
-- What is the effect of national population size and urbanisation on **GNI** and water access?
+Of these, **197** have a named income-group classification and **16** contain `NAN` in the income-group field.
 
-## Dataset snapshot
-The workbook contains **213 country/area rows**. Of these, 197 have a named income classification and 16 show `NAN` for income group.
+## Population Coverage
+- Dataset national population total: **7.787 billion**
+- Project world-population reference: **7.821 billion**
+- Absolute difference: approximately **34.3 million people**
+- Symmetric percentage difference: approximately **0.44%**
+- Dataset urban population: approximately **4.375 billion**
+- Dataset population-weighted urban share: **56.19%**
+- Project reference urban share: **55%**, equivalent to approximately **4.302 billion people**
 
-### Population coverage
-- Dataset national population total: **7.787 billion**.
-- Project world-population reference: **7.821 billion**.
-- Absolute gap: about **34.3 million people**.
-- Percentage difference using the project's symmetric percentage-difference method: about **0.44%**.
-- Dataset urban population: approximately **4.375 billion**.
-- Dataset population-weighted urban share: **56.19%**.
-- Project reference urban share: **55%**, equivalent to about **4.302 billion** people.
+### Insight
+The dataset is very close to the project world-population reference, supporting global-level analysis while still leaving a small coverage difference. The weighted urban share is also slightly above the 55% reference.
 
-**Insight:** The dataset is close enough to the project world estimate to support global-scale interpretation, but it should not be described as an exact census of the world population.
-
-## Access by area
+## Access by Area
 
 | Measure | National | Rural | Urban |
 |---|---:|---:|---:|
@@ -67,40 +64,65 @@ The workbook contains **213 country/area rows**. Of these, 197 have a named inco
 | Q3 | 99.89% | 99.12% | 99.95% |
 | Minimum | 37.20% | 21.98% | 49.66% |
 
-### Insight 1: Urban access is highest, rural access is lowest
-The mean rural-to-urban gap in at-least-basic access is approximately **13.35 percentage points**. The national mean sits between the two, which is consistent with a national measure reflecting the combined population.
+### Insight 1: The largest access disadvantage is rural
+Average at-least-basic access is approximately **13.35 percentage points lower in rural areas than in urban areas**. National access falls between the two measures, as expected for a population-level aggregate.
 
-### Insight 2: Rural inequality is much wider
-The rural basic-access IQR is roughly **34.29 percentage points**, compared with only **7.39 points** for urban access. The typical urban observation is therefore both higher and more tightly concentrated near universal basic access.
+### Insight 2: Rural access is much less consistent
+The rural basic-access interquartile range is approximately **34.29 percentage points**, compared with approximately **7.39 points** in urban areas.
 
-### Insight 3: Lower service levels are concentrated in rural areas
-Average rural shares are **5.84% limited**, **8.73% unimproved**, and **4.22% surface water**, versus urban averages of **3.28%**, **1.72%**, and **0.31%** respectively. Surface-water dependence is especially more pronounced in rural observations.
+This is an important inequality finding. Urban access is not only higher on average, it is also much more concentrated near universal access. Rural outcomes vary substantially more across countries.
 
-## Income-group pattern
-Mean national at-least-basic access by income group is:
+### Insight 3: Lower-quality service categories are more concentrated in rural areas
+Average service shares show larger rural exposure to lower service levels:
 
-| Income group | Mean basic access | Median basic access |
+| Service level | Rural mean | Urban mean |
+|---|---:|---:|
+| Limited | 5.84% | 3.28% |
+| Unimproved | 8.73% | 1.72% |
+| Surface water | 4.22% | 0.31% |
+
+Surface-water dependence shows the clearest disparity. Although its average urban share is very small, the rural average is materially higher.
+
+## Distribution Insights
+National at-least-basic access has a **median of 97.35%** but a lower **mean of 89.86%**.
+
+### Insight
+Most observations are concentrated at high access levels, while a smaller group of countries with much lower access pulls the mean downward. The median therefore represents the typical observation better than the mean when describing the centre of this skewed distribution.
+
+The reverse pattern appears in limited, unimproved, and surface-water access. Their medians are generally low, but a smaller group of countries records much higher values, creating long upper tails.
+
+## Income-Group Analysis
+
+| Income group | Mean national basic access | Median national basic access |
 |---|---:|---:|
 | Low income | 62.82% | 61.44% |
 | Lower middle income | 82.21% | 85.50% |
 | Upper middle income | 96.43% | 97.06% |
 | High income | 99.56% | 100.00% |
 
-**Insight:** The gradient is strong and monotonic in this workbook. Higher income categories are associated with substantially higher national access to at-least-basic water services. This is descriptive association, not proof that income alone causes the difference.
+### Insight
+The relationship is strongly ordered across the four income categories in this dataset. Average national basic access rises from approximately **62.82% in the low-income group to 99.56% in the high-income group**, a difference of approximately **36.74 percentage points**.
 
-## Distribution insight
-National basic access has a **high median of 97.35%** but a lower mean of **89.86%**. This indicates a concentration near high access values with a smaller group of low-access countries pulling the average downward. Limited, unimproved, and surface-service distributions show the opposite concentration: their medians are low, with relatively fewer observations carrying much larger values.
+This is a descriptive association. The analysis shows that higher-income groups have higher water access in the dataset, but it does not establish income as the sole cause of the difference.
 
-## Visualisation interpretation guide
-- **Urban vs rural share chart:** use it to inspect composition, not to imply that population size directly causes urbanisation.
-- **100% stacked service charts:** compare the composition of service levels across population bins while retaining the fact that service shares form a whole.
-- **Box/candlestick summaries:** emphasize median, quartiles, and range. The rural series should appear more dispersed than the urban series, particularly for basic, unimproved, and surface access.
-- **Income-group pivot:** treat differences as associations across grouped economies and avoid causal claims.
+## Combined Analytical Story
+Three patterns reinforce each other:
 
-## Data-quality cautions
-- Valid counts differ across water features. National basic access has 211 numeric observations, rural has 164, and urban has 175. Direct comparisons should therefore note missingness.
-- Raw `wat_bas_n` reaches slightly above 100 because of floating-point/source precision. The project explicitly handles this with a rounded derived field.
-- `NAN` income categories should remain separate from the four ordered income groups unless their classifications are sourced independently.
+1. **Urban populations have higher access than rural populations.**
+2. **Rural outcomes are much more dispersed across countries.**
+3. **Lower-income groups have substantially lower national basic-water access.**
 
-## Final Part 1 takeaway
-The 2020 snapshot shows broadly high access to at-least-basic drinking water, but the headline average hides a pronounced **rural disadvantage** and a strong **income-group gradient**. The main analytical gap is not simply whether access exists, but where low-access and higher-risk service categories remain concentrated.
+Together, these results show that a high global average can hide concentrated access problems. The populations most exposed to lower service levels are not evenly distributed across the dataset.
+
+## Data-Quality Considerations
+- National basic access has **211 numeric observations**, compared with **164 rural** and **175 urban** observations.
+- Rural/urban comparisons therefore use smaller valid samples than national comparisons.
+- `NAN` values are missing data and should not be interpreted as zero access.
+- Some source percentages marginally exceed 100 because of numerical precision. Rounded derived fields help prevent these precision artefacts from affecting full-access interpretation.
+- Income-group `NAN` observations should remain separate unless a verified external classification is added.
+
+## Final Takeaway
+The 2020 snapshot shows broadly high at-least-basic drinking-water access, but the aggregate picture masks a substantial **rural disadvantage**, much greater **rural variation**, and a pronounced **income-group gradient**.
+
+The main issue is therefore not simply whether global access is high. It is **where the remaining access deficit is concentrated and which populations continue to depend on limited, unimproved, or surface-water services**.
+
