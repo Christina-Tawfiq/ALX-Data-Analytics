@@ -1,68 +1,74 @@
-# Access to Drinking Water – Part 2: Transforming Data
+# Access to Drinking Water | Part 2: Transforming the Data
 
 ## Overview
-In this second part, we transformed the dataset to investigate changes in access to drinking water between 2000 and 2020.  
-We engineered new features, calculated **Annual Rates of Change (ARC)**, and compared progress across national, rural, and urban populations, as well as regions.  
-We also examined how **Gross National Income (GNI)** interacts with ARC to highlight the relationship between economic growth and improvements in water access.
+Part 2 transforms the JMP country-year dataset to investigate how at-least-basic drinking-water access changes over time. The analysis calculates Annual Rates of Change (ARC) for national, rural, and urban populations and compares progress across countries and regions.
 
 ## Purpose
-Part 2 shifts from a cross-sectional 2020 view to change over time. It calculates year differences and Annual Rates of Change (ARC), separates saturation from stagnation, compares rural and urban progress, and groups change by region.
+The objective is to move beyond a single-year access snapshot and determine whether drinking-water access is improving, stagnating, or declining, while accounting for unequal observation intervals and countries already at full access.
 
 ## Part 2 Files
 
 - [View Part 2 – TRANSFORMING DATA – Google Sheets](https://docs.google.com/spreadsheets/d/14j_BLFagojlPHK0S3b5W8C0IQHYjBErq_cFmQGQQTJo/edit?usp=sharing)
   
-- [Raw Data](./Raw-Data/)
+- [Raw Data](./Raw-Data/)  WHO/UNICEF JMP Estimates on the Use of Water time-series dataset
 
-## Required workflow covered
-1. Confirm the years represented and sort by country and year.
-2. Calculate `y_diff` only for two observations belonging to the same country.
-3. Remove true duplicate country-year observations if `y_diff = 0` under the project logic.
-4. Calculate `ARC_n`, `ARC_r`, and `ARC_u` as the change in at-least-basic access divided by the actual year interval.
-5. Handle missing service values without turning missingness into false zero change.
-6. Create rounded basic-access features and full-access flags.
-7. Count missing, full-access, positive, zero, and negative ARC cases.
-8. Calculate `ARC_diff = ARC_r - ARC_u` and inspect its distribution.
-9. Add region values and summarize national, rural, and urban ARC by region.
+## Analytical Workflow
+1. Imported the JMP time-series dataset.
+2. Sorted observations by `name` and `year`.
+3. Created `y_diff` to calculate the interval between observations from the same country.
+4. Used `y_diff = 0` as the project check for duplicate country-year observations.
+5. Calculated:
+   - `ARC_n` for national at-least-basic access
+   - `ARC_r` for rural at-least-basic access
+   - `ARC_u` for urban at-least-basic access
+6. Preserved missing service observations rather than converting them into false zero-change values.
+7. Created rounded basic-access fields and `ARC_n_full`, `ARC_r_full`, and `ARC_u_full` flags to distinguish full access from zero ARC below full access.
+8. Calculated `ARC_diff = ARC_r - ARC_u` to compare rural and urban progress.
+9. Added the workbook region classification and summarised ARC by region.
+10. Created population-size measures for examining ARC across national population groups.
 
-## What We Did
-- Imported JMP dataset (2000–2020).
-- Sorted data by country and year to ensure consistency.
-- Created new features:
-  - `y_diff` → Year difference per country.
-  - `ARC_n`, `ARC_r`, `ARC_u` → Annual Rates of Change for national, rural, and urban populations.
-  - `ARC_diff` → Difference between rural and urban ARC.
-  - `ARC_full` → Flags for countries with full access (100%).
-  - `region` → Added classification by region using lookup tables.
-- Built summary sheets with averages, minimums, maximums, and distributions.
-- Visualised ARC differences and regional progress.
-- Linked ARC values with **GNI** to explore whether higher income levels correlate with faster improvements in water access.
+## ARC Definition
+ARC is the average annual change in at-least-basic drinking-water access:
 
-## Key Questions Answered
-- Which years are represented in the dataset?
-- What is the average year difference per country?
-- What is the **ARC** for national, rural, and urban areas?
-- How does access to basic water change over time for different areas?
-- How does ARC differ between rural and urban populations?
-- How does ARC compare across regions?
-- How does national population size influence ARC?
-- How does **GNI** influence water access and ARC trends?
-- Which regions show the greatest improvement in access to water services?
-- What narrative can we build about global inequalities in water access?
-  
-## Time coverage
-The workbook includes **462 country-year rows**, representing **231 paired country records** for the ARC workflow. Years present are **2015, 2016, 2017, 2018, 2019, and 2020**. There are 231 observations in 2015 and 213 in 2020, with smaller numbers in the intermediate years.
+`ARC_x = (wat_bas_x at later year - wat_bas_x at earlier year) / year difference`
 
-The calculated year differences have:
+where `x` represents national (`n`), rural (`r`), or urban (`u`) access.
+
+ARC is measured in **percentage points per year**, not percentage growth.
+
+## Key Questions
+- Which years are represented in the analytical workbook?
+- How large are the intervals between country observations?
+- What is the ARC for national, rural, and urban populations?
+- Is basic-water access improving or declining?
+- Is rural access changing faster than urban access?
+- How does ARC vary across regions?
+- How does national population size relate to ARC patterns?
+
+## Time Coverage
+The analytical workbook contains **462 country-year rows**, corresponding to **231 country comparisons** in the ARC workflow.
+
+Years represented in the workbook are:
+
+- 2015
+- 2016
+- 2017
+- 2018
+- 2019
+- 2020
+
+There are **231 observations in 2015** and **213 in 2020**, with fewer observations in the intermediate years.
+
+### Year-Difference Summary
 - Mean: **4.80 years**
 - Median: **5 years**
 - Minimum: **1 year**
 - Maximum: **5 years**
 
-**Insight:** Most comparisons span the full five-year interval, but not all do. Using the actual `y_diff` in the ARC denominator is therefore essential.
+### Insight
+Most country comparisons cover five years, but some cover shorter intervals. Dividing by the actual `y_diff` is therefore essential. Using a fixed five-year denominator for every country would distort the annual rate for countries with shorter intervals.
 
 ## Annual Rates of Change
-ARC is expressed in **percentage points per year**.
 
 | ARC metric | Valid observations | Mean | Median | Minimum | Maximum |
 |---|---:|---:|---:|---:|---:|
@@ -70,17 +76,31 @@ ARC is expressed in **percentage points per year**.
 | Rural ARC | 167 | +0.484 | +0.290 | -1.227 | +2.668 |
 | Urban ARC | 181 | +0.155 | +0.030 | -1.620 | +2.668 |
 
-### Insight 1: Progress is positive on average
-All three mean ARCs are positive. The average rural ARC is the largest, followed by national and then urban ARC.
+### Insight 1: Access is improving on average
+The mean ARC is positive for national, rural, and urban populations. This indicates overall improvement among the observations with valid ARC values.
 
-### Insight 2: Faster rural change does not mean rural access is higher
-Part 1 shows rural basic access starting from a much lower level. Part 2 shows rural access changing faster on average. Together, those findings support a **catch-up interpretation**: some rural populations have more room to improve, while many urban populations are already close to full access.
+### Insight 2: Rural access is improving fastest on average
+Average rural ARC is approximately **0.484 percentage points per year**, compared with **0.155 in urban areas**.
 
-### Insight 3: Full access suppresses average ARC
-The workbook flags **62 national**, **29 rural**, and **55 urban** paired cases as full access under its rounded two-year rule. A zero ARC can therefore mean either genuine stagnation below full access or already-saturated access. Those cases should be kept analytically separate.
+This does not mean rural access is higher. Part 1 shows that rural populations begin from a much lower access level. The stronger rural ARC is therefore better interpreted as evidence of **catch-up from a lower baseline**.
 
-## Direction of change excluding full-access flags
-Using the workbook's ARC and full-access fields:
+### Insight 3: Median ARC is much lower than mean ARC
+The national mean ARC is **0.277**, while the median is only **0.079**. Rural and urban ARCs show similar mean-median gaps.
+
+This indicates that a smaller group of faster-improving observations raises the average. Improvement is therefore positive overall but unevenly distributed.
+
+## Full Access vs Stagnation
+The workbook flags:
+
+- **62 national** full-access cases
+- **29 rural** full-access cases
+- **55 urban** full-access cases
+
+### Insight
+A zero or near-zero ARC is not automatically a poor outcome. Countries already at or near full access have little room for additional improvement. Separating full-access observations from below-full-access stagnation prevents mature, high-access systems from being misclassified as underperforming.
+
+## Direction of Change
+Excluding observations flagged as full access:
 
 | Area | Positive ARC | Zero ARC | Negative ARC |
 |---|---:|---:|---:|
@@ -88,25 +108,35 @@ Using the workbook's ARC and full-access fields:
 | Rural | 116 | 5 | 17 |
 | Urban | 93 | 7 | 26 |
 
-**Insight:** Improving cases outnumber declining cases in each area among numeric, non-full-access observations. However, urban observations include more negative-ARC cases than rural observations in this workbook, despite urban access being much higher in level terms.
+### Insight
+Positive ARC observations outnumber declining observations in all three areas. However, negative ARC values remain present, showing that global progress is not universal.
 
-## Rural versus urban ARC difference
-The workbook defines `ARC_diff` as rural ARC minus urban ARC.
+Urban access has more negative-ARC observations than rural access in this workbook even though urban access levels are much higher overall. This reinforces the need to analyse **level and change separately**.
 
-- Valid comparisons: **165**
-- Mean difference: **+0.321 percentage points/year**
-- Median difference: **+0.212**
+## Rural vs Urban ARC
+`ARC_diff` is calculated as:
+
+`ARC_diff = ARC_r - ARC_u`
+
+For **165 valid rural/urban comparisons**:
+
+- Mean: **+0.321 percentage points/year**
+- Median: **+0.212**
 - Minimum: **-2.489**
 - Maximum: **+2.329**
 
-The two largest absolute gaps recorded are:
-1. **South Sudan: 2.489 percentage points/year absolute gap**
-2. **Morocco: 2.329 percentage points/year absolute gap**
+### Insight
+Both the mean and median are positive, showing that rural ARC exceeds urban ARC for the typical comparable observation in this dataset.
 
-A negative `ARC_diff` means urban ARC exceeded rural ARC, while a positive value means rural ARC exceeded urban ARC. The extremes show that national averages mask substantial country-level divergence.
+The spread from negative to positive values also demonstrates substantial country-level variation. Rural catch-up is an overall pattern, not a universal rule.
 
-## Regional ARC summary
-Mean ARC values from the workbook's region field are:
+### Largest Absolute Rural-Urban ARC Gaps
+1. **South Sudan:** approximately **2.489 percentage points/year**
+2. **Morocco:** approximately **2.329 percentage points/year**
+
+These cases demonstrate how strongly rural and urban trajectories can diverge within individual countries.
+
+## Regional ARC Summary
 
 | Region | National ARC | Rural ARC | Urban ARC |
 |---|---:|---:|---:|
@@ -118,14 +148,30 @@ Mean ARC values from the workbook's region field are:
 | South Asia | 0.480 | 0.559 | 0.266 |
 | Sub-Saharan Africa | 0.558 | 0.604 | 0.270 |
 
-### Regional insight
-National ARC is highest in the workbook's **Sub-Saharan Africa** group, while rural ARC is highest in the workbook's **Middle East & North Africa** group. Urban ARC is highest in **Sub-Saharan Africa**. These averages should not be read as final development rankings because valid ARC counts differ by region and area, and starting access levels differ substantially.
+### Regional Insights
+- The highest mean **national ARC** in the workbook is recorded for **Sub-Saharan Africa** at approximately **0.558 percentage points/year**.
+- The highest mean **rural ARC** is recorded for **Middle East & North Africa** at approximately **0.737**.
+- The highest mean **urban ARC** is recorded for **Sub-Saharan Africa** at approximately **0.270**.
 
-## Data-quality cautions
-- Missingness is much heavier for rural and urban service histories than for national values, which lowers the number of valid rural and urban ARC calculations.
-- Region results use the region labels already present in the workbook. Any unexpected classification should be reviewed against the original region mapping before publication.
-- Positive average ARC should not be extrapolated mechanically into a year of universal access. Such projections require explicit assumptions about whether the historical rate continues and how saturation affects the trajectory.
-- ARC is a rate of change in percentage points, not a percent growth rate.
+These results describe speed of improvement, not absolute access. Regions with faster ARC may still have lower starting access levels, while mature high-access regions may show slower change because they are closer to saturation.
 
-## Final Part 2 takeaway
-The time-based analysis shows **net improvement in basic-water access, with rural access improving faster on average than urban access**, but progress is uneven. High-access settings often have small or zero ARC because they are near saturation, whereas lower-access settings can record larger gains and larger rural-urban differences. The most useful interpretation therefore combines **starting level, ARC, full-access status, missingness, and region** rather than ranking countries or regions by ARC alone.
+## Combined Analytical Story
+Part 1 and Part 2 complement each other:
+
+- **Part 1 shows the access gap:** rural populations have lower basic-water access and much wider variation.
+- **Part 2 shows the direction of travel:** rural access is improving faster on average.
+
+Together, the results suggest partial convergence. The rural gap remains substantial, but the higher average rural ARC indicates that some of the largest access deficits are improving more quickly than already high-access urban systems.
+
+## Data-Quality Considerations
+- Rural and urban histories contain more missing values than national histories, reducing valid rural and urban ARC samples.
+- ARC is calculated only when comparable country observations and valid water-access values are available.
+- Full-access flags should be considered when interpreting zero or very small ARC values.
+- Regional averages use the classifications contained in the workbook and should be interpreted with their differing valid sample sizes.
+- Historical ARC describes observed change between available years. It should not be mechanically extrapolated into a predicted date of universal access.
+
+## Final Takeaway
+The time-based analysis shows **overall improvement in access to at-least-basic drinking water**, but the pace of progress is uneven.
+
+Rural access improves faster on average than urban access, supporting a catch-up interpretation, while country and regional differences remain substantial. The strongest interpretation combines **starting access level, ARC, full-access status, missingness, population context, and region** rather than relying on a single rate or ranking.
+
