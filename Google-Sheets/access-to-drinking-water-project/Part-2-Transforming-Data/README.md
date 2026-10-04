@@ -10,7 +10,9 @@ The objective is to move beyond a single-year access snapshot and determine whet
 
 - [View Part 2 – TRANSFORMING DATA – Google Sheets](https://docs.google.com/spreadsheets/d/14j_BLFagojlPHK0S3b5W8C0IQHYjBErq_cFmQGQQTJo/edit?usp=sharing)
   
-- [Raw Data](./Raw-Data/)  WHO/UNICEF JMP Estimates on the Use of Water time-series dataset
+- [Raw Data](./Raw-Data/)  WHO/UNICEF JMP Estimates on the Use of Water time-series dataset.
+- [Analyzed Data](./Analyzed-Data/) TRANSFORMING DATA
+- [Screenshots](./Screenshots/)  Visualisations are stored separately in the project screenshots folder.
 
 ## Analytical Workflow
 1. Imported the JMP time-series dataset.
