@@ -1,56 +1,81 @@
 # Access to Drinking Water | Project Overview
 
-## Project objective
-This project investigates access to safe and affordable drinking water using WHO/UNICEF JMP data and frames the work around UN Sustainable Development Goal SDG 6. The analysis focuses on inequality in service levels across countries, rural and urban areas, income groups, and regions.
+## Project Objective
+This project investigates access to safe and affordable drinking water using WHO/UNICEF Joint Monitoring Programme (JMP) data, framed around Sustainable Development Goal 6: clean water and sanitation.
+
+The analysis focuses on inequalities in water-service access across countries, national/rural/urban populations, income groups, population sizes, and regions.
+
 
 ## Project Files
 - [Part 1 – Preparing Data](../Part-1-Preparing-Data/)
   
 - [Part 2 – Transforming Data](../Part-2-Transforming-Data/)
 
-## Analytical roadmap
-The project has two analytical parts:
+## Project Structure
+The project is divided into two analytical parts:
 
-1. **Part 1, Understanding the data:** prepare the 2020 snapshot, validate population coverage, create derived population features, summarize water-service distributions, compare national/rural/urban access, examine population-size patterns, and evaluate income-group differences.
-2. **Part 2, Transforming the data:** compare country observations across time, quantify year gaps, calculate Annual Rates of Change (ARC), distinguish full-access cases from stagnation, compare rural versus urban progress, and summarize change by region.
+1. **Part 1: Understanding the Data**  
+   Prepares and validates the 2020 snapshot, creates population features, explores service-level distributions, and compares drinking-water access across national, rural, urban, and income-group categories.
 
-## Service levels
-The JMP service ladder includes safely managed, basic, limited, unimproved, and surface water. In the project spreadsheets, `wat_bas_*` represents **at least basic** access, combining safely managed and basic services. The suffixes `n`, `r`, and `u` represent national, rural, and urban populations.
+2. **Part 2: Transforming the Data**  
+   Examines change across country-year observations, calculates Annual Rates of Change (ARC), separates full-access cases from stagnation, compares rural and urban progress, and evaluates regional patterns.
+
+## Service Levels
+The JMP service ladder defines five drinking-water service levels:
+
+- Safely managed
+- Basic
+- Limited
+- Unimproved
+- Surface water
+
+In the supplied analytical datasets, `wat_bas_*` represents **at least basic access**, which combines safely managed and basic services. The suffixes `n`, `r`, and `u` refer to national, rural, and urban populations.
 
 ## Key Questions Addressed
-- How do population estimates compare to dataset values?
-- How does urbanisation affect water access?
-- What inequalities exist between rural and urban populations?
-- How does national population size and **Gross National Income (GNI)** influence water access?
-- How do **Annual Rates of Change (ARC)** differ across regions and population groups?
+- How closely does the 2020 dataset represent the estimated world population?
+- How do urban and rural population shares compare?
+- How do drinking-water service levels differ between national, rural, and urban populations?
+- How does access vary across income groups and population sizes?
+- How quickly is access changing over time?
+- Is rural access catching up with urban access?
+- How do ARC patterns differ across regions?
 
-## Executive insights
-- The 2020 workbook contains **213 country/area rows**. Its population total is approximately **7.787 billion**, compared with the project reference of **7.821 billion**, a difference of roughly **0.44%** using the requested percentage-difference convention.
-- The dataset's population-weighted urban share is approximately **56.19%**, versus the project reference of **55%**. This shows that the workbook is close to the external world estimate while not matching it exactly.
-- Basic-water access has a clear area gradient in the 2020 data: mean access is **94.69% urban**, **89.86% national**, and **81.34% rural**. The corresponding medians are **98.11%**, **97.35%**, and **90.73%**, respectively.
-- Rural areas also show materially wider dispersion. For rural basic access, Q1 is **64.83%** and Q3 is **99.12%**, compared with **92.56% to 99.95%** for urban access. The gap is therefore not only about average levels, but also about consistency across countries.
-- Income-group stratification is pronounced. Mean national basic access rises from **62.82%** in low-income economies to **82.21%** in lower-middle-income, **96.43%** in upper-middle-income, and **99.56%** in high-income economies.
-- In Part 2, the average ARC is positive for all three area types: **0.277 percentage points/year nationally**, **0.484 rural**, and **0.155 urban** among non-missing observations. Rural access is improving faster on average, but this must be interpreted alongside the larger rural starting deficit and the number of observations already at full access.
-- The mean rural-minus-urban ARC difference is **+0.321 percentage points/year**. Its median is **+0.212**, suggesting that rural improvement exceeds urban improvement for a typical comparable country, though there are important country-level exceptions.
+## Executive Insights
+- The 2020 analytical dataset contains **213 country/area observations** and represents approximately **7.787 billion people**, close to the project reference of **7.821 billion**.
+- The population-weighted urban share in the dataset is approximately **56.19%**, compared with the project reference of **55%**.
+- At-least-basic water access is highest in urban areas and lowest in rural areas. Mean basic access is approximately **94.69% urban**, **89.86% national**, and **81.34% rural**.
+- Rural access is substantially more dispersed across countries than urban access, showing that the global inequality is not only a difference in average access but also in consistency.
+- National basic-water access increases sharply across income groups, from approximately **62.82%** among low-income observations to **99.56%** among high-income observations.
+- In the time-based analysis, average ARC is positive for national, rural, and urban access. Rural ARC is highest on average at approximately **0.484 percentage points per year**, compared with **0.277 nationally** and **0.155 in urban areas**.
+- The mean rural-minus-urban ARC difference is approximately **+0.321 percentage points per year**, indicating faster rural improvement on average among observations where both rates can be compared.
 
-## Interpretation
-The strongest overall story is **progress with persistent inequality**. At least-basic access is already very high in many urban and higher-income settings, leaving less room for additional annual gains. Rural and lower-income populations start from substantially lower access levels, so faster rural ARC can indicate catch-up rather than parity. The analysis should therefore consider both **level** and **change**: high access with a low ARC can represent saturation, while high ARC from a low baseline can represent meaningful but incomplete convergence.
+## Overall Interpretation
+The project tells a clear story of **progress with persistent inequality**.
 
-## Important data-quality notes
-- Missing service values are present, especially in rural and urban breakdowns, so area-level statistics use different valid sample sizes.
-- Some raw percentages marginally exceed 100 because of source-data precision. The project workflow therefore creates rounded features for full-access logic.
-- ARC should be calculated only between observations for the same country and must account for the actual year difference.
-- Region labels in the workbook should be treated as data values, not independently corrected or reclassified unless an authoritative mapping is supplied.
+Urban and higher-income populations generally have very high levels of at-least-basic drinking-water access. Rural and lower-income populations remain further behind, but rural access is improving more quickly on average in the time-based analysis.
 
-## Sources
-- WHO/UNICEF Joint Monitoring Programme data as supplied in the project workbooks.
+This means that access level and rate of change should be interpreted together. A low ARC in a high-access setting may reflect saturation near universal access, while a high ARC in a low-access setting may indicate meaningful catch-up without implying that the access gap has already closed.
+
+## Data Considerations
+- Missing values are more common in rural and urban service-level fields than in national fields.
+- Valid sample sizes therefore differ across national, rural, and urban comparisons.
+- Some raw percentage values are marginally above 100 because of source precision, so rounded access features are used where full-access classification is required.
+- ARC must only compare observations from the same country and must use the actual interval between recorded years.
+- Regional analysis uses the region classifications contained in the project workbook.
 
 ## Tools
 - Google Sheets
-- Excel (Data Cleaning, Formulas, Pivot Tables, Charts)
+- Excel
+- Data cleaning and transformation
+- Formulas and derived features
+- Pivot tables and summary statistics
+- Exploratory data analysis
 
 ## Glossary
-- **SDG**: Sustainable Development Goal  
-- **JMP**: Joint Monitoring Programme (WHO/UNICEF)  
-- **GNI**: Gross National Income  
-- **ARC**: Annual Rate of Change
+- **SDG:** Sustainable Development Goal
+- **JMP:** WHO/UNICEF Joint Monitoring Programme
+- **ARC:** Annual Rate of Change
+- **GNI:** Gross National Income
+
+## Source
+WHO/UNICEF Joint Monitoring Programme data supplied with the integrated Access to Drinking Water project.
