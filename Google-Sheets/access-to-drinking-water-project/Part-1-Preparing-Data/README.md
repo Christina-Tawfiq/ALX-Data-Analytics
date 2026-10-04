@@ -11,7 +11,7 @@ The objective is to build a reliable 2020 analytical snapshot and identify the m
 - [View Part 1 – PREPARING DATA – Google Sheets](https://docs.google.com/spreadsheets/d/1hnKiyyvtD9Fu4pFC99G-85hFez5bv7qaPcxG6alWCwQ/edit?usp=sharing)
 
 - [Raw Data](./Raw-Data/) WHO/UNICEF JMP Estimates on the Use of Water (2020)
-- [Analyzed Data](./Analyzed-Data/)
+- [Analyzed Data](./Analyzed-Data/) PREPARING DATA
 - [Screenshots](./Screenshots/)  Visualisations are stored separately in the project screenshots folder.
 
 ## Analytical Workflow
