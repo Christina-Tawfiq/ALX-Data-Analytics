@@ -196,13 +196,6 @@ END
 - Table design with primary keys, foreign keys, defaults and `CHECK` constraints
 - `INSERT INTO ... SELECT` workflow for operationalising analysis
 
-## SQL Quality Notes
-- The script contains two `CREATE TABLE Project_progress` statements. Keep only one executable definition.
-- In the final `INSERT`, the alias switches between `Improvement` and `Improvements`; standardise this before execution.
-- Replace `ELSE 'null'` with SQL `NULL` so missing recommendations are stored as null values rather than the text `"null"`.
-- The long improvement query is duplicated. Encapsulating it in a CTE or view would reduce maintenance risk.
-- Validate the rule `FLOOR(time_in_queue / 30)` against the intended capacity model before using it as an engineering quantity.
-
 ## Takeaway
 Part 4 closes the analytical loop: it combines multiple datasets, exposes geographic differences in water access, converts service problems into intervention rules, and creates a project table for implementation. The strongest feature is the transition from descriptive SQL to decision-oriented SQL, where source type, water quality and queue conditions directly determine the recommended action.
 
