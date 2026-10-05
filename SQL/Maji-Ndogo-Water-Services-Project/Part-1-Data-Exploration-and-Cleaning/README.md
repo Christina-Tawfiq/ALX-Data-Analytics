@@ -1,6 +1,6 @@
 # 🔎 Part 1: Data Exploration & Cleaning
 
-[⬅ Back to Project Overview](../README.md) | [Next: Part 2 ➡](../Part-2-Water-Access-Analysis/README.md)
+[⬅ Back to Project Overview](./README.md) | [Next: Part 2 ➡](../Part-2-Water-Access-Analysis/README.md)
 
 ## 📌 Overview
 The first stage focuses on understanding the database, exploring its core datasets, and identifying data-quality issues before deeper analysis begins.
@@ -59,4 +59,4 @@ Employee records are explored to establish the people dimension used later in th
 ---
 
 ## 🧭 Navigation
-[⬅ Project Overview](../README.md) | [Next: Part 2 ➡](../Part-2-Water-Access-Analysis/README.md)
+[⬅ Project Overview](./README.md) | [Next: Part 2 ➡](../Part-2-Water-Access-Analysis/README.md)
