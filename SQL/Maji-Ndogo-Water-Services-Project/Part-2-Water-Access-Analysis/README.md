@@ -1,6 +1,6 @@
 # 📊 Part 2: Water Access & Queue Analysis
 
-[⬅ Part 1](../Part-1-Data-Exploration-and-Cleaning/README.md) | [Project Overview](../README.md) | [Next: Part 3 ➡](../Part-3-Audit-Investigation/README.md)
+[⬅ Part 1](../Part-1-Data-Exploration-and-Cleaning/README.md) | [Project Overview](../Overview/README.md) | [Next: Part 3 ➡](../Part-3-Audit-Investigation/README.md)
 
 ## 📌 Overview
 Part 2 moves from data preparation to understanding how water infrastructure serves the population, how sources are distributed, and where queue pressure appears.
@@ -68,4 +68,4 @@ String Functions • `COUNT()` • `SUM()` • `AVG()` • `NULLIF()` • `GROUP
 ---
 
 ## 🧭 Navigation
-[⬅ Part 1](../Part-1-Data-Exploration-and-Cleaning/README.md) | [Project Overview](../README.md) | [Next: Part 3 ➡](../Part-3-Audit-Investigation/README.md)
+[⬅ Part 1](../Part-1-Data-Exploration-and-Cleaning/README.md) | [Project Overview](../Overview/README.md) | [Next: Part 3 ➡](../Part-3-Audit-Investigation/README.md)
