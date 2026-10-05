@@ -3,48 +3,80 @@
 [⬅ Part 1](../Part-1-Data-Exploration-and-Cleaning/README.md) | [Project Overview](../Overview/README.md) | [Next: Part 3 ➡](../Part-3-Audit-Investigation/README.md)
 
 ## Overview
-Part 2 moves from initial exploration into data cleaning, geographic profiling, population coverage, prioritisation, and time-based queue analysis. The SQL also demonstrates string manipulation, updates, aggregation, ranking, window functions, and date/time functions.
+Part 2 turns the cleaned survey database into an operational picture of Maji Ndogo: who collected the data, where the survey was concentrated, how residents access water, and when queues are worst. The emphasis is not just on SQL syntax, but on measurable findings that can guide prioritisation.
 
-## Key Findings
+## Key Results
+| Metric | Result |
+|---|---:|
+| Locations surveyed | 39,650 |
+| Rural locations | 23,740 (59.9%) |
+| Urban locations | 15,910 (40.1%) |
+| Estimated people represented by water sources | 27,628,140 |
+| Survey period | 1 Jan 2021 to 14 Jul 2023 |
+| Survey duration | 924 days |
+| Average positive queue time | 123.26 minutes |
 
-### 1. Cleaning employee contact data
-The analysis standardises employee records by generating government email addresses from employee names and trimming unwanted spaces from phone numbers.
+## 1. Employee Data Cleaning
+Employee email addresses were standardized from employee names using `LOWER()`, `REPLACE()` and `CONCAT()`. Phone numbers were checked with `LENGTH()` and cleaned with `LTRIM()` / `RTRIM()`.
 
+A copy of the employee table was created before applying updates, providing a safer place to validate the transformation before changing the main table.
+
+### SQL used
 ```sql
-UPDATE employee
-SET email = CONCAT(LOWER(REPLACE(employee_name, ' ', '.')), '@ndogowater.gov');
-
-UPDATE employee
-SET phone_number = LTRIM(RTRIM(phone_number));
+SELECT
+ assigned_employee_id,
+ COUNT( visit_count ) AS NUMBER_OF_VISITS
+FROM
+    visits
+GROUP BY assigned_employee_id
+ORDER BY NUMBER_OF_VISITS desc
+LIMIT 3 ;
 ```
 
-This improves consistency in fields that can later be used for communication, matching, and reporting.
+## 2. Employee Workload
+The visit table was grouped by `assigned_employee_id` to identify the most active surveyors.
 
-### 2. Workload is concentrated among a few field employees
-The three employees with the most recorded visits are:
+| Rank | Employee ID | Visits |
+|---:|---:|---:|
+| 1 | 1 | 3,708 |
+| 2 | 30 | 3,676 |
+| 3 | 34 | 3,539 |
 
-| Employee ID | Recorded visits |
-|---:|---:|
-| 1 | 3,708 |
-| 30 | 3,676 |
-| 34 | 3,539 |
+**Insight:** The busiest surveyors each recorded more than 3,500 visits. This concentration makes employee-level validation important later in the project because individual data-quality issues could affect many records.
 
-These results justify the follow-up query in Part 2 that retrieves employee details for IDs `1`, `30`, and `34`.
+## 3. Geographic Coverage
+### SQL used
+```sql
+SELECT
+      location_type ,
+      COUNT(location_type) AS number_of_sources
+from
+      location
+group by location_type;
 
-### 3. Most recorded locations are rural
-The `location` table contains **39,650 locations**:
+SELECT 23740 / (15910 + 23740) * 100;
+```
 
+### Rural vs Urban
 | Location type | Records | Share |
 |---|---:|---:|
 | Rural | 23,740 | 59.9% |
 | Urban | 15,910 | 40.1% |
 
-Nearly **60%** of locations are rural, showing that the project has a strong rural-service dimension.
+The dataset is therefore weighted toward rural locations.
 
-### 4. Geographic concentration varies by province
-Location records by province are:
+### SQL used
+```sql
+SELECT
+       province_name,
+       COUNT(province_name) AS number_of_records
+from
+      location
+group by province_name;
+```
 
-| Province | Records |
+### Records by Province
+| Province | Location records |
 |---|---:|
 | Kilimani | 9,510 |
 | Akatsi | 8,940 |
@@ -52,191 +84,136 @@ Location records by province are:
 | Amanzi | 6,950 |
 | Hawassa | 6,030 |
 
-Kilimani contains the largest number of recorded locations, while Hawassa has the fewest among the five provinces.
+**Insight:** Kilimani has the largest geographic representation in the survey, while Hawassa has the smallest of the five provinces. These counts describe survey coverage, not population size.
 
-### 5. The survey represents 27.63 million people
-Summing `number_of_people_served` across all recorded sources gives **27,628,140 people**.
-
-Population coverage by source type is:
-
-| Water source | Sources | People served | Share of people | Avg. people/source |
-|---|---:|---:|---:|---:|
-| Shared tap | 5,767 | 11,945,272 | 43.24% | 2,071 |
-| Well | 17,383 | 4,841,724 | 17.52% | 279 |
-| Tap in home | 7,265 | 4,678,880 | 16.94% | 644 |
-| Tap in home broken | 5,856 | 3,799,720 | 13.75% | 649 |
-| River | 3,379 | 2,362,544 | 8.55% | 699 |
-
-### 6. Shared taps are the highest-impact source category
-Shared taps make up only **5,767 of 39,650 sources**, yet they serve **43.24% of the total recorded population**.
-
-Their average load is approximately **2,071 people per source**, far above every other source type. By comparison, wells average only **279 people per source** despite being the most common source.
-
-This is an important prioritisation insight: infrastructure should not be ranked only by how frequently a source type appears. Population impact matters much more.
-
-### 7. Ranking sources makes prioritisation actionable
-Part 2 uses a window function to rank improvable sources within each source type:
-
+### SQL used
 ```sql
+select
+       type_of_water_source,
+       count(type_of_water_source) AS total_number
+from water_source
+group by type_of_water_source
+order by total_number desc;
+
+select
+       type_of_water_source,
+       round(AVG(number_of_people_served)) AS avg_people_served
+from water_source
+group by type_of_water_source
+order by avg_people_served desc;
+
 SELECT
-    source_id,
-    type_of_water_source,
-    number_of_people_served,
-    ROW_NUMBER() OVER (
-        PARTITION BY type_of_water_source
-        ORDER BY number_of_people_served DESC
-    ) AS priority_rank
-FROM water_source
-WHERE type_of_water_source IN (
-    'shared_tap', 'well', 'river', 'tap_in_home_broken'
-)
-ORDER BY number_of_people_served DESC;
-```
-
-This approach provides a practical intervention list because each source is compared against sources facing the same type of infrastructure problem.
-
-### 8. The field survey spans 924 days
-The earliest visit was recorded on **2021-01-01 09:10**, while the latest was recorded on **2023-07-14 13:53**.
-
-Using `DATEDIFF(MAX(time_of_record), MIN(time_of_record))`, the survey duration is **924 days**.
-
-### 9. Queue times reveal a serious access burden
-Part 2 correctly excludes zero queue times using `NULLIF(time_in_queue, 0)` when measuring the experience of people who actually waited.
-
-The resulting average positive queue time is approximately **123.26 minutes**, rounded by the SQL query to **123 minutes**.
-
-That means a typical non-zero wait in the surveyed data exceeds **two hours**.
-
-### 10. Saturday is the most severe queue day
-Average positive queue time by weekday:
-
-| Day | Avg. queue time (minutes) |
-|---|---:|
-| Saturday | 246 |
-| Monday | 137 |
-| Friday | 120 |
-| Tuesday | 108 |
-| Thursday | 105 |
-| Wednesday | 97 |
-| Sunday | 82 |
-
-Saturday stands out dramatically at about **246 minutes**, approximately **4 hours and 6 minutes** on average among records with a positive wait.
-
-This suggests that interventions at high-pressure sources could have especially strong value on Saturdays.
-
-### 11. Early morning and late afternoon are queue pressure points
-The hourly analysis of positive queue times shows several high-wait periods:
-
-| Hour | Avg. queue time (minutes) |
-|---|---:|
-| 07:00 | 149 |
-| 08:00 | 149 |
-| 17:00 | 149 |
-| 06:00 | 149 |
-| 18:00 | 147 |
-
-The dataset also contains a **19:00** average of about **168 minutes**, but it is based on only **37 positive-queue records**, so it should be interpreted cautiously compared with the much larger samples around 06:00-08:00 and 17:00-18:00.
-
-The broader pattern points to pronounced queue pressure in the **early morning and late afternoon/early evening**.
-
-## SQL Quality Improvements
-
-### Avoid hardcoding the surveyed population
-The original percentage query uses the literal value `27628140` as its denominator. The value is correct for this dataset, but deriving it directly is safer and easier to maintain.
-
-```sql
-SELECT
-    type_of_water_source,
-    ROUND(
-        100.0 * SUM(number_of_people_served)
-        / (SELECT SUM(number_of_people_served) FROM water_source),
-        2
-    ) AS pct_served_people
-FROM water_source
+type_of_water_source,
+sum(number_of_people_served) AS total_served_people
+from water_source
 GROUP BY type_of_water_source
-ORDER BY pct_served_people DESC;
-```
+order by total_served_people DESC;
 
-### Calculate rural share dynamically
-Instead of:
-
-```sql
-SELECT 23740 / (15910 + 23740) * 100;
-```
-
-use:
-
-```sql
 SELECT
-    ROUND(
-        100.0 * SUM(location_type = 'Rural') / COUNT(*),
-        2
-    ) AS rural_percentage
-FROM location;
+type_of_water_source,
+round((sum(number_of_people_served)/27628140)*100) AS pct_served_people
+from water_source
+GROUP BY type_of_water_source
+order by pct_served_people DESC;
 ```
 
-This keeps the result correct if the underlying data changes.
+## 4. Water Access Profile
+| Source type | Sources | People served | Share of people | Avg. people/source |
+|---|---:|---:|---:|---:|
+| shared_tap | 5,767 | 11,945,272 | 43.24% | 2,071 |
+| well | 17,383 | 4,841,724 | 17.52% | 279 |
+| tap_in_home | 7,265 | 4,678,880 | 16.94% | 644 |
+| tap_in_home_broken | 5,856 | 3,799,720 | 13.75% | 649 |
+| river | 3,379 | 2,362,544 | 8.55% | 699 |
 
-### Fix the province aggregation typo
-The Part 2 script contains `fro` instead of `FROM` in the province-count query. The corrected version is:
+### What this reveals
+- **Shared taps are the largest population dependency:** 43.24% of the surveyed population relies on them, and each shared tap serves about 2,071 people on average.
+- **Wells are numerous but individually small:** wells account for 17,383 of the 39,650 sources, yet serve about 279 people per source on average.
+- **Broken household infrastructure is material:** broken home taps represent 13.75% of the people served, making infrastructure repair a potentially high-impact intervention.
+- **River dependence remains significant:** more than 2.36 million people are represented by river sources.
+
+## 5. Prioritising Improvable Sources
+`RANK()` ranks source categories by total population served, while `ROW_NUMBER()` with `PARTITION BY` produces an independent priority list inside each improvable source type.
 
 ```sql
-SELECT
-    province_name,
-    COUNT(*) AS number_of_records
-FROM location
-GROUP BY province_name
-ORDER BY number_of_records DESC;
+ROW_NUMBER() OVER (
+  PARTITION BY type_of_water_source
+  ORDER BY number_of_people_served DESC
+) AS priority_rank
 ```
 
-### Make visit counts clearer
-Because each row in `visits` represents a recorded visit, `COUNT(*)` communicates the intent more clearly than `COUNT(visit_count)`:
+The prioritisation excludes functioning `tap_in_home` sources and focuses on `shared_tap`, `well`, `river`, and `tap_in_home_broken`.
 
+**Insight:** Ranking by population served shifts the question from "how many sources exist?" to "where can an intervention affect the most people?" This is especially important for shared taps, where relatively few facilities serve a very large share of the population.
+
+### SQL used
 ```sql
-SELECT
-    assigned_employee_id,
-    COUNT(*) AS number_of_visits
-FROM visits
-GROUP BY assigned_employee_id
-ORDER BY number_of_visits DESC
-LIMIT 3;
+select
+round(avg(nullif(time_in_queue,0))) as average_queue_time
+from visits;
+
+select
+dayname(time_of_record) as week_day,
+round(avg(nullif(time_in_queue,0))) as average_queue_time
+from visits
+group by week_day
+order by average_queue_time desc;
+
+select
+hour(time_of_record) as hour_OF_day,
+round(avg(nullif(time_in_queue,0))) as average_queue_time
+from visits
+group by hour_OF_day
+order by average_queue_time desc;
 ```
 
-## Analytical Insights
+## 6. Queue-Time Analysis
+Zero-minute queue records were removed from the waiting-time average through `NULLIF(time_in_queue, 0)`.
 
-### Population impact changes the priority order
-A source category can be relatively uncommon but operationally critical. Shared taps demonstrate this clearly: they represent about **14.5% of water sources** but serve **43.24% of the recorded population**.
+### Average queue by weekday
+| Day | Avg. positive queue time (min) |
+|---|---:|
+| Saturday | 246.3 |
+| Monday | 136.6 |
+| Friday | 119.7 |
+| Tuesday | 107.9 |
+| Thursday | 105.4 |
+| Wednesday | 96.6 |
+| Sunday | 81.5 |
 
-### Queue analysis identifies when access is hardest
-The positive-wait average of **123.26 minutes** shows a significant access burden. Breaking this metric down by weekday and hour makes the result more actionable: Saturday and the morning/evening periods emerge as particularly important pressure points.
+**Insight:** Saturday is the clear pressure point, with an average positive wait of about 246 minutes, approximately double the overall positive-queue average of 123.26 minutes.
 
-### Rural coverage should remain central to planning
-With **59.9%** of locations classified as rural, solutions should be evaluated not only for total population reach but also for their suitability across dispersed rural locations.
+### Highest hourly averages
+| Hour | Avg. positive queue time (min) |
+|---|---:|
+| 19:00 | 167.7 |
+| 07:00 | 149.1 |
+| 08:00 | 148.9 |
+| 06:00 | 148.9 |
+| 17:00 | 148.8 |
+| 18:00 | 146.8 |
 
-### Ranking within source type supports fairer interventions
-Partitioning rankings by `type_of_water_source` avoids comparing fundamentally different infrastructure problems as if they were identical. It creates separate priority queues for broken home taps, wells, rivers, and shared taps while still emphasising population served.
+**Insight:** Queue pressure is concentrated around early morning and evening periods. Combined with the Saturday peak, this provides a useful basis for scheduling temporary water support or prioritising high-demand shared taps.
 
---- 
+## SQL Skills Demonstrated
+- Data cleaning with `LOWER`, `REPLACE`, `LTRIM`, `RTRIM`, `LENGTH`
+- Data modification with `CREATE TABLE`, `UPDATE`, `DROP TABLE`
+- Aggregation with `COUNT`, `SUM`, `AVG`
+- Geographic grouping with multi-column `GROUP BY`
+- Filtering with `WHERE` and `IN`
+- Window functions with `RANK()` and `ROW_NUMBER()`
+- Partitioned ranking with `PARTITION BY`
+- NULL handling using `NULLIF()`
+- Date/time analysis with `DATEDIFF`, `DAYNAME`, `HOUR`, `TIME_FORMAT`, `DATE_FORMAT`
 
-## 🛠️ SQL Skills Demonstrated
+## SQL Quality Notes
+- Rename `employee_coby` to `employee_copy` or `employee_backup` for clarity.
+- Prefer `COUNT(*)` when the goal is explicitly to count visit rows.
+- Compute population percentages against a CTE/subquery total rather than hard-coding `27,628,140`, making the query reusable when data changes.
+- Use consistent aliases and explicitly qualify table names in multi-table workflows.
 
-- **Data Cleaning** using `LOWER()`, `REPLACE()`, `LTRIM()`, and `RTRIM()` to standardize employee contact information.
-- **String Manipulation** with `CONCAT()` to generate standardized employee email addresses.
-- **Data Modification** using `UPDATE`, `CREATE TABLE`, and `DROP TABLE`.
-- **Aggregation** with `COUNT()`, `SUM()`, `AVG()`, `MIN()`, and `MAX()`.
-- **Grouping & Segmentation** using `GROUP BY` to analyze employees, locations, provinces, towns, and water-source types.
-- **Conditional Filtering** with `WHERE` and `IN`.
-- **Window Functions** using `RANK()` and `ROW_NUMBER()`.
-- **Partitioned Ranking** with `PARTITION BY` to prioritize water sources within each source type.
-- **Sorting & Prioritization** using `ORDER BY` and `LIMIT`.
-- **NULL Handling** with `NULLIF()` to exclude zero waiting times from queue averages.
-- **Date & Time Analysis** using `DATEDIFF()`, `DAYNAME()`, `HOUR()`, `TIME_FORMAT()`, and `DATE_FORMAT()`.
-- **Analytical SQL** to calculate population coverage, geographic distributions, workload, survey duration, and queue patterns.
-  
----
-
-## Part 2 Takeaway
-Part 2 turns the exploratory work into a clearer prioritisation framework. The data shows that the survey covers **27.63 million people**, most recorded locations are rural, shared taps carry the largest population burden, and queue pressure is strongly concentrated at particular times. Combining geographic aggregation, population served, time analysis, and within-type rankings creates a much stronger basis for deciding where water-service improvements can have the greatest impact.
+## Takeaway
+Part 2 establishes the scale of the water-access challenge. Shared taps serve the largest share of residents, nearly 60% of surveyed locations are rural, and positive queue times average more than two hours. The combination of population-based ranking and time-based queue analysis provides a defensible foundation for deciding which water sources should be improved first.
 
 ---
 
