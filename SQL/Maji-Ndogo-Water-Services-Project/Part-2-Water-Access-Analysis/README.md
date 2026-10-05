@@ -206,11 +206,6 @@ Zero-minute queue records were removed from the waiting-time average through `NU
 - NULL handling using `NULLIF()`
 - Date/time analysis with `DATEDIFF`, `DAYNAME`, `HOUR`, `TIME_FORMAT`, `DATE_FORMAT`
 
-## SQL Quality Notes
-- Rename `employee_coby` to `employee_copy` or `employee_backup` for clarity.
-- Prefer `COUNT(*)` when the goal is explicitly to count visit rows.
-- Compute population percentages against a CTE/subquery total rather than hard-coding `27,628,140`, making the query reusable when data changes.
-- Use consistent aliases and explicitly qualify table names in multi-table workflows.
 
 ## Takeaway
 Part 2 establishes the scale of the water-access challenge. Shared taps serve the largest share of residents, nearly 60% of surveyed locations are rural, and positive queue times average more than two hours. The combination of population-based ranking and time-based queue analysis provides a defensible foundation for deciding which water sources should be improved first.
