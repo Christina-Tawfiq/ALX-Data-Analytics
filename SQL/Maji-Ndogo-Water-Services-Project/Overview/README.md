@@ -35,10 +35,10 @@ The analysis focuses on the following questions:
 
 | Part | Focus | Documentation |
 |---|---|---|
-| **01** | 🔎 Data Exploration & Cleaning | [View Part 1](./Part-1-Data-Exploration-and-Cleaning/README.md) |
-| **02** | 📊 Water Access & Queue Analysis | [View Part 2](./Part-2-Water-Access-Analysis/README.md) |
-| **03** | 🕵️ Data Integrity & Audit Investigation | [View Part 3](./Part-3-Audit-Investigation/README.md) |
-| **04** | 🚧 Infrastructure Improvement Strategy | [View Part 4](./Part-4-Infrastructure-Planning/README.md) |
+| **01** | 🔎 Data Exploration & Cleaning | [View Part 1](./Part-1-Data-Exploration-and-Cleaning) |
+| **02** | 📊 Water Access & Queue Analysis | [View Part 2](./Part-2-Water-Access-Analysis) |
+| **03** | 🕵️ Data Integrity & Audit Investigation | [View Part 3](./Part-3-Audit-Investigation) |
+| **04** | 🚧 Infrastructure Improvement Strategy | [View Part 4](./Part-4-Infrastructure-Planning) |
 
 ---
 
@@ -50,7 +50,7 @@ A key cleaning task checks wells recorded as `Clean` against biological measurem
 
 **Core SQL:** `SELECT`, `DISTINCT`, `WHERE`, `LIKE`, `IN`, `UPDATE`
 
-📖 [Detailed Part 1 README](./Part-1-Data-Exploration-and-Cleaning/README.md)
+📖 [Detailed Part 1 README](../Part-1-Data-Exploration-and-Cleaning/README.md)
 
 ---
 
@@ -70,7 +70,7 @@ The analysis covers:
 
 Window functions such as `RANK()` and `ROW_NUMBER()` are used to create a systematic prioritization framework.
 
-📖 [Detailed Part 2 README](./Part-2-Water-Access-Analysis/README.md)
+📖 [Detailed Part 2 README](../Part-2-Water-Access-Analysis/README.md)
 
 ---
 
@@ -90,7 +90,7 @@ statements LIKE '%cash%'
 
 > **Important:** Score discrepancies and references to `cash` are treated as investigation flags only. They do not establish misconduct on their own.
 
-📖 [Detailed Part 3 README](./Part-3-Audit-Investigation/README.md)
+📖 [Detailed Part 3 README](../Part-3-Audit-Investigation/README.md)
 
 ---
 
@@ -110,7 +110,7 @@ The analysis evaluates access at province and town level and translates differen
 
 A `Project_progress` table is also designed to track selected sources from backlog through implementation and completion.
 
-📖 [Detailed Part 4 README](./Part-4-Infrastructure-Planning/README.md)
+📖 [Detailed Part 4 README](../Part-4-Infrastructure-Planning/README.md)
 
 ---
 
