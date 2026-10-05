@@ -35,10 +35,10 @@ The analysis focuses on the following questions:
 
 | Part | Focus | Documentation |
 |---|---|---|
-| **01** | 🔎 Data Exploration & Cleaning | [View Part 1](./Part-1-Data-Exploration-and-Cleaning) |
-| **02** | 📊 Water Access & Queue Analysis | [View Part 2](./Part-2-Water-Access-Analysis) |
-| **03** | 🕵️ Data Integrity & Audit Investigation | [View Part 3](./Part-3-Audit-Investigation) |
-| **04** | 🚧 Infrastructure Improvement Strategy | [View Part 4](./Part-4-Infrastructure-Planning) |
+| **01** | 🔎 Data Exploration & Cleaning | [View Part 1](../Part-1-Data-Exploration-and-Cleaning) |
+| **02** | 📊 Water Access & Queue Analysis | [View Part 2](../Part-2-Water-Access-Analysis) |
+| **03** | 🕵️ Data Integrity & Audit Investigation | [View Part 3](../Part-3-Audit-Investigation) |
+| **04** | 🚧 Infrastructure Improvement Strategy | [View Part 4](../Part-4-Infrastructure-Planning) |
 
 ---
 
