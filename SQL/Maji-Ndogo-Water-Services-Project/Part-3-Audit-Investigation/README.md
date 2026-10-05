@@ -1,6 +1,6 @@
 # 🕵️ Part 3: Data Integrity & Audit Investigation
 
-[⬅ Part 2](../Part-2-Water-Access-Analysis/README.md) | [Project Overview](../README.md) | [Next: Part 4 ➡](../Part-4-Infrastructure-Planning/README.md)
+[⬅ Part 2](../Part-2-Water-Access-Analysis/README.md) | [Project Overview](../Overview/README.md) | [Next: Part 4 ➡](../Part-4-Infrastructure-Planning/README.md)
 
 ## 📌 Overview
 Part 3 evaluates the reliability of the original field-survey results by comparing surveyor water-quality scores with independent auditor assessments.
@@ -76,4 +76,4 @@ Multi-table `JOIN`s • Views • CTEs • Subqueries • `COUNT()` • `AVG()` 
 ---
 
 ## 🧭 Navigation
-[⬅ Part 2](../Part-2-Water-Access-Analysis/README.md) | [Project Overview](../README.md) | [Next: Part 4 ➡](../Part-4-Infrastructure-Planning/README.md)
+[⬅ Part 2](../Part-2-Water-Access-Analysis/README.md) | [Project Overview](../Overview/README.md) | [Next: Part 4 ➡](../Part-4-Infrastructure-Planning/README.md)
