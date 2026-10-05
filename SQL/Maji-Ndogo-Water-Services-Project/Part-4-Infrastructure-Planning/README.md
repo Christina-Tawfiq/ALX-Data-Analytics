@@ -1,6 +1,6 @@
 # 🚧 Part 4: Infrastructure Planning
 
-[⬅ Part 3](../Part-3-Audit-Investigation/README.md) | [Project Overview](../README.md)
+[⬅ Part 3](../Part-3-Audit-Investigation/README.md) | [Project Overview](../Overview/README.md)
 
 ## 📌 Overview
 The final stage transforms previous findings into an actionable infrastructure strategy by connecting geographic conditions, water quality, population served, and queue pressure with proposed interventions.
@@ -75,4 +75,4 @@ Explore → Clean → Analyze → Validate → Investigate → Prioritize → Re
 ---
 
 ## 🧭 Navigation
-[⬅ Part 3](../Part-3-Audit-Investigation/README.md) | [Project Overview](../README.md)
+[⬅ Part 3](../Part-3-Audit-Investigation/README.md) | [Project Overview](../Overview/README.md)
