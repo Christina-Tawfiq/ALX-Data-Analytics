@@ -7,20 +7,23 @@ Part 4 moves from analysis to implementation. The SQL combines geography, water-
 
 ### SQL used
 ```sql
-CREATE VIEW combined_analysis_table AS
-select
-loc.province_name,
-loc.town_name,
-ws.type_of_water_source,
-ws.number_of_people_served,
-loc.location_type,
-v.time_in_queue,
-well_P.results
-from visits as v
-left JOIN well_pollution as well_P ON well_p.source_id = v.source_id
-inner join location as loc on v.location_id=loc.location_id
-inner join water_source as ws on ws.source_id=v.source_id
-WHERE v.visit_count= 1;
+CREATE OR REPLACE VIEW combined_analysis_table AS
+SELECT
+    loc.province_name,
+    loc.town_name,
+    ws.type_of_water_source,
+    ws.number_of_people_served,
+    loc.location_type,
+    v.time_in_queue,
+    well_p.results
+FROM visits AS v
+LEFT JOIN well_pollution AS well_p
+ON well_p.source_id = v.source_id
+INNER JOIN location AS loc
+ON v.location_id = loc.location_id
+INNER JOIN water_source AS ws
+ON ws.source_id = v.source_id
+WHERE v.visit_count = 1;
 ```
 
 ## 1. Building a Unified Analysis Layer
@@ -39,21 +42,25 @@ The view brings together:
 ### SQL used
 ```sql
 WITH province_totals AS (
-SELECT province_name,
-SUM(number_of_people_served) AS total_ppl_serv
+SELECT
+    province_name,
+    SUM(number_of_people_served) AS total_ppl_serv
 FROM combined_analysis_table
 GROUP BY province_name
 )
 SELECT
-ct.province_name,
-ROUND((SUM(CASE WHEN type_of_water_source = 'river' THEN number_of_people_served ELSE 0 END) * 100.0 / pt.total_ppl_serv), 0) AS river,
-ROUND((SUM(CASE WHEN type_of_water_source = 'shared_tap' THEN number_of_people_served ELSE 0 END) * 100.0 / pt.total_ppl_serv), 0) AS shared_tap,
-ROUND((SUM(CASE WHEN type_of_water_source = 'tap_in_home' THEN number_of_people_served ELSE 0 END) * 100.0 / pt.total_ppl_serv), 0) AS tap_in_home,
-ROUND((SUM(CASE WHEN type_of_water_source = 'tap_in_home_broken' THEN number_of_people_served ELSE 0 END) * 100.0 / pt.total_ppl_serv), 0) AS tap_in_home_broken,
-ROUND((SUM(CASE WHEN type_of_water_source = 'well' THEN number_of_people_served ELSE 0 END) * 100.0 / pt.total_ppl_serv), 0) AS well
-FROM combined_analysis_table ct
-JOIN province_totals pt ON ct.province_name = pt.province_name
-GROUP BY ct.province_name
+    ct.province_name,
+    ROUND((SUM(CASE WHEN type_of_water_source = 'river' THEN number_of_people_served ELSE 0 END) * 100.0 / pt.total_ppl_serv), 0) AS river,
+    ROUND((SUM(CASE WHEN type_of_water_source = 'shared_tap' THEN number_of_people_served ELSE 0 END) * 100.0 / pt.total_ppl_serv), 0) AS shared_tap,
+    ROUND((SUM(CASE WHEN type_of_water_source = 'tap_in_home' THEN number_of_people_served ELSE 0 END) * 100.0 / pt.total_ppl_serv), 0) AS tap_in_home,
+    ROUND((SUM(CASE WHEN type_of_water_source = 'tap_in_home_broken' THEN number_of_people_served ELSE 0 END) * 100.0 / pt.total_ppl_serv), 0) AS tap_in_home_broken,
+    ROUND((SUM(CASE WHEN type_of_water_source = 'well' THEN number_of_people_served ELSE 0 END) * 100.0 / pt.total_ppl_serv), 0) AS well
+FROM combined_analysis_table AS ct
+JOIN province_totals AS pt
+ON ct.province_name = pt.province_name
+GROUP BY
+    ct.province_name,
+    pt.total_ppl_serv
 ORDER BY ct.province_name;
 ```
 
@@ -71,52 +78,54 @@ The project findings highlight several geographic priorities:
 ### SQL used
 ```sql
 SELECT
-province_name,
-town_name,
-ROUND(tap_in_home_broken / (tap_in_home_broken + tap_in_home) * 100,0) AS Pct_broken_taps
+    province_name,
+    town_name,
+    ROUND(
+        tap_in_home_broken /
+        (tap_in_home_broken + tap_in_home) * 100,
+        0
+    ) AS pct_broken_taps
 FROM town_aggregated_water_access;
 ```
 
 ## 3. Town-Level Access and Broken-Tap Ratio
 Because town names are not necessarily unique, town analysis uses a composite key of `province_name` + `town_name`.
 
-A temporary table, `town_aggregated_water_access`, stores the percentage mix of water-source types for each town. The analysis then calculates:
-
-```sql
-ROUND(
-  tap_in_home_broken /
-  (tap_in_home_broken + tap_in_home) * 100,
-  0
-) AS pct_broken_taps
-```
+A temporary table, `town_aggregated_water_access`, stores the percentage mix of water-source types for each town.
 
 **Insight:** Looking at broken taps as a proportion of all household taps is more informative than counting broken taps alone. It identifies places where infrastructure exists but is failing to deliver water.
 
 ### SQL used
 ```sql
 SELECT
-location.address,
-location.town_name,
-location.province_name,
-water_source.source_id,
-water_source.type_of_water_source,
-well_pollution.results,
-case
-      when results ='Contaminated: Biological' then 'Install UV and RO filter'
-      when results ='Contaminated: Chemical' then 'Install RO filter'
-      when type_of_water_source='river' then 'Drill well'
-      WHEN type_of_water_source = 'shared_tap' AND time_in_queue >=30 THEN CONCAT("Install ", FLOOR(time_in_queue / 30), " taps nearby")
-      when type_of_water_source= 'tap_in_home_broken' then 'Diagnose local infrastructure'
-      else 'null'
-end as Improvement
+    location.address,
+    location.town_name,
+    location.province_name,
+    water_source.source_id,
+    water_source.type_of_water_source,
+    well_pollution.results,
+    CASE
+        WHEN results = 'Contaminated: Biological' THEN 'Install UV and RO filter'
+        WHEN results = 'Contaminated: Chemical' THEN 'Install RO filter'
+        WHEN type_of_water_source = 'river' THEN 'Drill well'
+        WHEN type_of_water_source = 'shared_tap' AND time_in_queue >= 30
+            THEN CONCAT("Install ", FLOOR(time_in_queue / 30), " taps nearby")
+        WHEN type_of_water_source = 'tap_in_home_broken' THEN 'Diagnose local infrastructure'
+        ELSE NULL
+    END AS Improvement
 FROM water_source
-LEFT JOIN well_pollution ON water_source.source_id = well_pollution.source_id
-INNER JOIN visits ON water_source.source_id = visits.source_id
-INNER JOIN location ON location.location_id = visits.location_id
+LEFT JOIN well_pollution
+ON water_source.source_id = well_pollution.source_id
+INNER JOIN visits
+ON water_source.source_id = visits.source_id
+INNER JOIN location
+ON location.location_id = visits.location_id
 WHERE visits.visit_count = 1
-AND (results!= 'Clean'
-OR type_of_water_source IN ('tap_in_home_broken','river')
-OR (type_of_water_source = 'shared_tap' AND time_in_queue >=30));
+AND (
+    results != 'Clean'
+    OR type_of_water_source IN ('tap_in_home_broken', 'river')
+    OR (type_of_water_source = 'shared_tap' AND time_in_queue >= 30)
+);
 ```
 
 ## 4. From Findings to Interventions
@@ -179,11 +188,63 @@ CASE
     THEN CONCAT('Install ', FLOOR(time_in_queue / 30), ' taps nearby')
   WHEN type_of_water_source = 'tap_in_home_broken'
     THEN 'Diagnose local infrastructure'
+  ELSE NULL
 END
 ```
 
+## 8. Adding Recommendations to Project_progress
+Step 8 keeps the insertion operation separate from the Step 7 recommendation preview:
+
+```sql
+INSERT INTO Project_progress (
+    source_id,
+    Address,
+    Town,
+    Province,
+    Source_type,
+    Improvement
+)
+SELECT
+    source_id,
+    address,
+    town_name,
+    province_name,
+    type_of_water_source,
+    improvement
+FROM (
+    SELECT
+        location.address,
+        location.town_name,
+        location.province_name,
+        water_source.source_id,
+        water_source.type_of_water_source,
+        CASE
+            WHEN results = 'Contaminated: Biological' THEN 'Install UV and RO filter'
+            WHEN results = 'Contaminated: Chemical' THEN 'Install RO filter'
+            WHEN type_of_water_source = 'river' THEN 'Drill well'
+            WHEN type_of_water_source = 'shared_tap' AND time_in_queue >= 30
+                THEN CONCAT("Install ", FLOOR(time_in_queue / 30), " taps nearby")
+            WHEN type_of_water_source = 'tap_in_home_broken' THEN 'Diagnose local infrastructure'
+            ELSE NULL
+        END AS Improvement
+    FROM water_source
+    LEFT JOIN well_pollution
+    ON water_source.source_id = well_pollution.source_id
+    INNER JOIN visits
+    ON water_source.source_id = visits.source_id
+    INNER JOIN location
+    ON location.location_id = visits.location_id
+    WHERE visits.visit_count = 1
+    AND (
+        results != 'Clean'
+        OR type_of_water_source IN ('tap_in_home_broken', 'river')
+        OR (type_of_water_source = 'shared_tap' AND time_in_queue >= 30)
+    )
+) AS improvement_projects;
+```
+
 ## SQL Skills Demonstrated
-- Analytical views with `CREATE VIEW`
+- Analytical views with `CREATE OR REPLACE VIEW`
 - Multi-table `INNER JOIN` and `LEFT JOIN`
 - CTEs for reusable totals
 - Conditional aggregation with `SUM(CASE WHEN...)`
@@ -198,7 +259,6 @@ END
 
 ## Takeaway
 Part 4 closes the analytical loop: it combines multiple datasets, exposes geographic differences in water access, converts service problems into intervention rules, and creates a project table for implementation. The strongest feature is the transition from descriptive SQL to decision-oriented SQL, where source type, water quality and queue conditions directly determine the recommended action.
-
 
 ---
 
