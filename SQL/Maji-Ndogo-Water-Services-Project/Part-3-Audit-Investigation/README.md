@@ -9,18 +9,18 @@ The auditor report contains a randomly selected re-visit sample of **1,620 recor
 
 ### SQL used
 ```sql
-select
+SELECT
     ar.location_id,
     v.record_id,
-    ar.true_water_source_score as auditor_score,
-    wq.subjective_quality_score as surveyor_score
-from auditor_report as ar
-join visits as v
-  on ar.location_id=v.location_id
-join water_quality as wq
-  on v.record_id=wq.record_id
-where ar.true_water_source_score=wq.subjective_quality_score
-  and v.visit_count=1;
+    ar.true_water_source_score AS auditor_score,
+    wq.subjective_quality_score AS surveyor_score
+FROM auditor_report AS ar
+JOIN visits AS v
+ON ar.location_id = v.location_id
+JOIN water_quality AS wq
+ON v.record_id = wq.record_id
+WHERE ar.true_water_source_score = wq.subjective_quality_score
+AND v.visit_count = 1;
 ```
 
 ## Audit Outcome
@@ -46,21 +46,25 @@ The comparison is restricted to `visit_count = 1` so the first survey visit is c
 
 ### SQL used
 ```sql
-create view Incorrect_records as (
-select
+CREATE OR REPLACE VIEW Incorrect_records AS (
+SELECT
     ar.location_id,
     v.record_id,
-    ar.true_water_source_score as auditor_score,
-    wq.subjective_quality_score as surveyor_score,
+    ar.true_water_source_score AS auditor_score,
+    wq.subjective_quality_score AS surveyor_score,
     v.assigned_employee_id,
     em.employee_name,
-    ar.statements AS statements
-from auditor_report as ar
-join visits as v on ar.location_id=v.location_id
-join water_quality as wq on v.record_id=wq.record_id
-join employee as em on em.assigned_employee_id=v.assigned_employee_id
-where ar.true_water_source_score!=wq.subjective_quality_score
-  and v.visit_count=1);
+    ar.statements
+FROM auditor_report AS ar
+JOIN visits AS v
+ON ar.location_id = v.location_id
+JOIN water_quality AS wq
+ON v.record_id = wq.record_id
+JOIN employee AS em
+ON em.assigned_employee_id = v.assigned_employee_id
+WHERE ar.true_water_source_score != wq.subjective_quality_score
+AND v.visit_count = 1
+);
 ```
 
 ## 2. Isolating the 102 Incorrect Records
@@ -78,23 +82,38 @@ This converts an audit discrepancy into an investigation-ready dataset.
 
 ### SQL used
 ```sql
-with error_count as (
-select distinct employee_name,
-       count(employee_name) as number_of_mistakes
-from Incorrect_records
-group by employee_name),
-avg_error_count_per_empl as(
-select avg(number_of_mistakes)
-from error_count),
-suspect_list as(
-SELECT employee_name, number_of_mistakes
-FROM error_count
-WHERE number_of_mistakes > (select avg(number_of_mistakes) from error_count)
+WITH error_count AS (
+    SELECT
+        employee_name,
+        COUNT(employee_name) AS number_of_mistakes
+    FROM Incorrect_records
+    GROUP BY employee_name
+),
+avg_error_count_per_empl AS (
+    SELECT
+        AVG(number_of_mistakes) AS avg_number_of_mistakes
+    FROM error_count
+),
+suspect_list AS (
+    SELECT
+        employee_name,
+        number_of_mistakes
+    FROM error_count
+    WHERE number_of_mistakes > (
+        SELECT avg_number_of_mistakes
+        FROM avg_error_count_per_empl
+    )
 )
-SELECT employee_name, location_id, statements
+SELECT
+    employee_name,
+    location_id,
+    statements
 FROM Incorrect_records
-WHERE employee_name in (SELECT employee_name FROM suspect_list)
-  and statements like '%cash%';
+WHERE employee_name IN (
+    SELECT employee_name
+    FROM suspect_list
+)
+AND statements LIKE '%cash%';
 ```
 
 ## 3. Employee-Level Error Analysis
@@ -131,7 +150,7 @@ JOIN employee
 - Multi-table `JOIN` analysis
 - Aliasing for readable analytical queries
 - Validation using equality and inequality filters
-- Reusable database objects with `CREATE VIEW`
+- Reusable database objects with `CREATE OR REPLACE VIEW`
 - Layered analysis with multiple CTEs
 - Aggregation with `COUNT()` and `AVG()`
 - Subqueries inside filtering logic
@@ -141,7 +160,6 @@ JOIN employee
 
 ## Takeaway
 Part 3 is the quality-control layer of the project. The audit validates 1,518 of 1,620 checked records, isolates 102 mismatches, traces those mismatches back through the relational model, and uses above-average error frequency plus citizen statements to focus the investigation. It is a strong example of using SQL not only to summarize data, but to test its credibility.
-
 
 ---
 
