@@ -244,6 +244,7 @@ Comments TEXT
 
 -- Here is a less commented one so it is easier to see how we design the Project_progress table:
 
+/*
 CREATE TABLE Project_progress (
 Project_id SERIAL PRIMARY KEY,
 source_id VARCHAR(20) NOT NULL REFERENCES water_source(source_id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -256,6 +257,7 @@ Source_status VARCHAR(50) DEFAULT 'Backlog' CHECK (Source_status IN ('Backlog', 
 Date_of_completion DATE,
 Comments TEXT
 );
+*/
 
 -- ============================================================
 -- 7. Generate water-source improvement recommendations
@@ -278,7 +280,7 @@ case
       when type_of_water_source='river'        then 'Drill well'
       WHEN type_of_water_source = 'shared_tap' AND time_in_queue >=30  THEN CONCAT("Install ", FLOOR(time_in_queue / 30), " taps nearby")
       when type_of_water_source= 'tap_in_home_broken' then 'Diagnose local infrastructure'
-      else 'null'
+      ELSE NULL
  end as Improvement 
 FROM
 water_source
@@ -335,7 +337,7 @@ case
       when type_of_water_source='river'        then 'Drill well'
       WHEN type_of_water_source = 'shared_tap' AND time_in_queue >=30  THEN CONCAT("Install ", FLOOR(time_in_queue / 30), " taps nearby")
       when type_of_water_source= 'tap_in_home_broken' then 'Diagnose local infrastructure'
-      else 'null'
+      ELSE NULL
  end as Improvement   
 
 FROM water_source
@@ -365,4 +367,4 @@ AND time_in_queue >= 30
 )
 )
 
-);
+) AS improvement_projects;
