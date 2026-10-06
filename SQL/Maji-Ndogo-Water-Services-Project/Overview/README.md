@@ -173,19 +173,19 @@ SQL/
     │
     ├── Part-1-Data-Exploration-and-Cleaning/
     │   ├── README.md
-    │   └── SQL_PART1.sql
+    │   └── SQL_PART1_FINAL.sql
     │
     ├── Part-2-Water-Access-Analysis/
     │   ├── README.md
-    │   └── SQL_PART2.sql
+    │   └── SQL_PART2_FINAL.sql
     │
     ├── Part-3-Audit-Investigation/
     │   ├── README.md
-    │   └── SQL_PART3.sql
+    │   └── SQL_PART3_FINAL.sql
     │
     └── Part-4-Infrastructure-Planning/
         ├── README.md
-        └── SQL_PART4.sql
+        └── SQL_PART4_FINAL.sql
 ```
 
 ---
