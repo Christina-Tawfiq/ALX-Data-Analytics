@@ -131,17 +131,6 @@ The findings provide decision-makers with the information needed to:
 
 ---
 
-## Dashboards
-
-- National Overview
-
-- Broken Infrastructure Dashboard
-
-- Queue Analysis Dashboard
-
-- Crime Analysis Dashboard
-
----
 
 ## Author
 
