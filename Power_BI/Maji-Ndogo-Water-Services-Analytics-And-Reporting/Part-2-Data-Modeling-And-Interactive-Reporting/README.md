@@ -165,7 +165,7 @@ The dashboards developed in this phase established the foundation for executive 
 
 ## 🧭 Navigation
 
-**⬅ Previous: Part 1 – Exploratory Analysis & Visual Storytelling** | **Next: Part 3 – Executive Dashboard & Budget Planning ➡**
+[⬅ Part 1 – Exploratory Analysis & Visual Storytelling](../Part-1-Exploratory-Analysis-And-Visual-Storytelling/README.md) | [Next: Part 3 – Executive Dashboard & Budget Planning ➡](../Part-3-Executive-Dashboard-And-Budget-Planning/README.md)
 
 ---
 
