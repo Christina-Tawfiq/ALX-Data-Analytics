@@ -184,8 +184,7 @@ By combining project progress tracking, budget monitoring, population impact ana
 
 ## 🧭 Navigation
 
-../Part-3-Executive-Dashboard/README.md | ../Overview/README.md
-
+[⬅ Part 3 – Executive Dashboard & Budget Planning](../Part-3-Executive-Dashboard-And-Budget-Planning/README.md) | [Project Overview](../Overview/README.md)
 ---
 
 ## Author
