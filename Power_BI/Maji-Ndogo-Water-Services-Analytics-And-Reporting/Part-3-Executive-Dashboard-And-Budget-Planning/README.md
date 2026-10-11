@@ -170,7 +170,8 @@ By combining KPIs, budgeting analysis, improvement tracking, and provincial repo
 
 ## 🧭 Navigation
 
-../Part-2-Data-Modeling-and-Reporting/README.md | ../Overview/README.md | ../Part-4-Project-Monitoring/README.md
+
+[⬅ Part 2 – Data Modeling & Interactive Reporting](../Part-2-Data-Modeling-And-Interactive-Reporting/README.md) | [Next: Part 4 – Public Transparency & Project Monitoring ➡](../Part-4-Public-Transparency-And-Project-Monitoring/README.md)
 
 ---
 
