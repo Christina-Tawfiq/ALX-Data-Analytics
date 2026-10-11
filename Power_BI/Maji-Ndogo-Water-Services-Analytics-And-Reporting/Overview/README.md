@@ -14,7 +14,7 @@ The work was completed across four stages, progressing from exploratory analysis
 
 | Project Component | Description |
 |-------------------|-------------|
-| 🔎 **Part 1 – Exploratory Analysis & Visual Storytelling** | [Open README](ploratory-Analysis-And-Visual-Storytelling/README.md) |
+| 🔎 **Part 1 – Exploratory Analysis & Visual Storytelling** | [Open README](Exploratory-Analysis-And-Visual-Storytelling/README.md) |
 | 📊 **Part 2 – Data Modeling & Interactive Reporting** | [Open README](../Part-2-Data-Modeling-And-Interactive-Reporting/README.md) |
 | 📈 **Part 3 – Executive Dashboard & Budget Planning** | [Open README](../Part-3-Executive-Dashboard-And-Budget-Planning/README.md) |
 | 📡 **Part 4 – Public Transparency & Project Monitoring** | [Open README](../Part-4-Public-Transparency-And-Project-Monitoring/README.md) |
