@@ -1,4 +1,4 @@
-# Maji Ndogo Water Services Analytics & Reporting Project
+# 💧 Maji Ndogo Water Services Analytics & Reporting Project
 
 ## Overview
 
@@ -24,133 +24,167 @@ Decision-makers needed data-driven insights to:
 
 ---
 
-# Part 1: Exploratory Analysis
+# 🔎 Part 1: Exploratory Analysis & Visual Storytelling
 
 ## Objectives
 
-- Explore water access challenges.
-- Investigate queue patterns.
-- Analyze pollution issues.
-- Examine crime incidents related to water collection activities.
+- Explore water accessibility challenges.
+- Investigate queue behavior and service demand.
+- Analyze water quality and pollution patterns.
+- Examine crime incidents associated with water collection activities.
 
 ## Key Insights
 
-- Shared water sources experienced the longest waiting times.
-- Water access challenges varied significantly across provinces.
-- Women and children were disproportionately affected by water-collection-related incidents.
-- Crime patterns varied by province, day, and victim type.
-- Long waiting queues were often associated with operational and social challenges.
+- The analysis covered five provinces across Maji Ndogo: Sokoto, Kilimani, Hawassa, Akatsi, and Amanzi.
+- Approximately 64% of the population lived in rural areas, while 36% lived in urban areas.
+- Shared taps served the largest proportion of residents across Maji Ndogo.
+- Kilimani experienced the highest overall queue burden, indicating significant demand pressure on shared water sources.
+- Water contamination affected a large proportion of tested water sources.
+- Kilimani and Akatsi reported the highest crime levels, while Amanzi showed comparatively lower crime exposure.
+- Women were disproportionately affected by water-collection-related crime incidents.
 
 ## Skills Applied
 
 - Exploratory Data Analysis
 - Data Visualization
 - Dashboard Design
-- Storytelling with Data
+- Geographic Analysis
+- Interactive Reporting
+- Data Storytelling
 
 ---
 
-# Part 2: Data Modeling & Interactive Reporting
+# 📊 Part 2: Data Modeling & Interactive Reporting
 
 ## Objectives
 
 - Build a scalable Power BI data model.
 - Integrate multiple datasets.
-- Create analytical dashboards.
+- Create interactive analytical dashboards.
+- Connect geographic, operational, and social datasets into a unified reporting solution.
 
 ## Dashboards Created
 
 ### National Overview
-- Population analysis
-- Water source distribution
-- Urban vs Rural comparison
-- Geographic overview
 
-### Queues Dashboard
-- Queue duration analysis
-- Queue composition analysis
-- Time-based queue patterns
+- Population Analysis
+- Water Source Distribution
+- Rural vs Urban Comparison
+- Geographic Overview
 
-### Pollution Dashboard
-- Pollution status overview
-- Geographic distribution of contamination
+### Queue Analysis
 
-### Crime Dashboard
-- Crime type analysis
-- Victim gender analysis
-- Provincial crime comparisons
+- Queue Duration Analysis
+- Queue Composition Analysis
+- Time-Based Queue Patterns
+- Province-Level Queue Investigation
+
+### Pollution Analysis
+
+- Pollution Status Overview
+- Geographic Distribution of Contamination
+- Province-Level Water Quality Assessment
+
+### Crime Analysis
+
+- Crime Type Analysis
+- Victim Category Analysis
+- Provincial Crime Comparisons
+- Temporal Crime Patterns
 
 ## Key Insights
 
-- Rural populations relied more heavily on shared water sources.
-- Specific provinces showed higher levels of water quality issues.
-- Queue times differed substantially between locations.
-- Crime and water accessibility challenges varied geographically.
+- Rural populations relied more heavily on shared water infrastructure.
+- Shared taps produced the highest population impact despite being fewer in number than wells.
+- Queue duration increased significantly as population demand grew.
+- Kilimani experienced the highest overall queue burden.
+- Water contamination remained a major challenge across multiple provinces.
+- Akatsi displayed a distinctive pollution profile with higher chemical contamination levels.
+- Women were nearly twice as likely to be victims of water-related crime compared to men.
+- Crime exposure differed considerably across provinces, with Kilimani and Akatsi showing the highest risk levels.
 
 ## Skills Applied
 
 - Data Modeling
 - Power Query
 - Relationship Management
+- Shape Maps
+- Cross Filtering
 - Interactive Dashboard Development
 
 ---
 
-# Part 3: Executive Decision-Making Dashboard
+# 📈 Part 3: Executive Decision-Making Dashboard
 
 ## Objectives
 
-- Support national planning.
-- Estimate infrastructure budgets.
-- Measure expected impact of improvements.
-- Enable provincial-level decision making.
+- Support national planning and resource allocation.
+- Estimate infrastructure improvement budgets.
+- Measure the expected impact of improvements.
+- Compare provincial water access conditions.
+- Prioritize projects using data-driven insights.
 
 ## Dashboard Components
 
 ### National Dashboard
+
 - Basic Water Access KPI
-- Improvement Impact KPI
-- Budget KPI
-- Rural vs Urban comparison
-- Budget allocation analysis
-- Improvement prioritization
+- Improvement Potential KPI
+- Total Upgrade Cost KPI
+- Budget Allocation Analysis
+- Required Improvements Analysis
+- Provincial Comparison
 
 ### Provincial Dashboards
-- Town-level budget analysis
-- Town-level planning
-- Budget distribution
-- Water access monitoring
+
+- Sokoto Province Report
+- Kilimani Province Report
+- Hawassa Province Report
+- Akatsi Province Report
+- Amanzi Province Report
+
+### Town-Level Reporting
+
+- Town Budget Allocation
+- Population Impact Analysis
+- Improvement Tracking
+- Budget Distribution Monitoring
 
 ## Key Insights
 
-- Significant populations still lacked basic water access.
-- Rural improvements required considerably higher investment.
-- Infrastructure budgets varied substantially across provinces.
-- Public tap installation projects represented a major improvement category.
-- Budget allocation could be prioritized using population impact metrics.
+- Current Basic Water Access across Maji Ndogo is approximately **34%**.
+- Planned improvements could increase water access by approximately **66%**.
+- The estimated national upgrade budget is approximately **$147M**.
+- Kilimani requires the highest number of planned improvements.
+- Sokoto receives the largest budget allocation.
+- Amanzi currently has the highest level of basic water access among all provinces.
+- Water treatment projects represent the largest category of required improvements nationwide.
+- Rural communities require the majority of planned investment across most provinces.
 
 ## Advanced Features
 
 - DAX Measures
+- KPI Cards
 - Bookmarks
 - Navigation Buttons
 - Drill-through Reporting
-- KPI Cards
+- Interactive Provincial Filtering
 
-## Key DAX Calculations
+## Skills Applied
 
-- Rural_adjusted_cost
-- Budgeted_improvement_cost
-- Aggregated_improvements
-- Average_queue_time
-- Basic_water_access
-- Basic_Access_Pct
-- Total_Budget
-- Population_With_Basic_Access
+- DAX
+- KPI Development
+- Executive Reporting
+- Budget Analysis
+- Data Modeling
+- Interactive Dashboard Design
+- Drill-through Navigation
+- Geographic Analysis
+- Data Storytelling
 
 ---
 
-# Part 4: Public Transparency & Project Monitoring
+# 📡 Part 4: Public Transparency & Project Monitoring
 
 ## Objectives
 
@@ -163,24 +197,28 @@ Decision-makers needed data-driven insights to:
 ## Dashboard Features
 
 ### Progress Monitoring
-- Project completion tracking
-- Progress KPI monitoring
-- Geographic progress mapping
+
+- Project Completion Tracking
+- Progress KPI Monitoring
+- Geographic Progress Mapping
 
 ### Cost Monitoring
-- Budget vs Actual comparisons
-- Running budget analysis
-- Running cost analysis
+
+- Budget vs Actual Comparisons
+- Running Budget Analysis
+- Running Cost Analysis
 
 ### Impact Tracking
-- Population helped
-- Improved water access
-- Remaining work estimation
+
+- Population Helped
+- Improved Water Access
+- Remaining Work Estimation
 
 ### Vendor Analysis
-- Vendor cost comparison
-- Performance monitoring
-- Geographic vendor evaluation
+
+- Vendor Cost Comparison
+- Performance Monitoring
+- Geographic Vendor Evaluation
 
 ## Key Insights
 
@@ -197,9 +235,9 @@ Decision-makers needed data-driven insights to:
 - Power BI
 - Power Query
 - DAX
+- Excel
 - Data Modeling
 - Business Intelligence
-- Data Visualization
 
 ---
 
@@ -222,10 +260,10 @@ Decision-makers needed data-driven insights to:
 
 ## Deliverables
 
-- National Dashboard
-- Provincial Dashboards
+- National Water Access Dashboard
+- Provincial Executive Dashboards
 - Queue Analysis Dashboard
-- Pollution Dashboard
+- Pollution Analysis Dashboard
 - Crime Analysis Dashboard
 - Budget Planning Dashboard
 - Project Monitoring Dashboard
@@ -236,6 +274,6 @@ Decision-makers needed data-driven insights to:
 
 **Christina Ashraf Tawfiq**
 
-Mechanical Engineer | Data Analytics Learner
+Mechanical Engineer | Data Analyst
 
 ALX Data Analytics Program
