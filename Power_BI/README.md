@@ -4,7 +4,7 @@ This folder contains Power BI projects completed as part of the ALX Data Analyti
 
 ## Projects
 
-### 💧 Maji Ndogo Water Services Analytics & Reporting
+### 💧 Maji-Ndogo-Water-Improvement-Program
 
 An end-to-end Power BI project focused on analyzing water accessibility challenges across Maji Ndogo through interactive dashboards, data modeling, executive reporting, budget planning, and infrastructure improvement analysis.
 
