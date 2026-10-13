@@ -1,0 +1,368 @@
+# ⚙️ DAX Measures & Data Modeling
+
+## 📌 Overview
+
+This document explains the DAX measures, calculated columns, relationships, and business logic used throughout the Maji Ndogo Public Transparency & Project Monitoring Dashboard.
+
+The analytical solution was developed using **320,900 records across 9 interconnected datasets**, enabling project monitoring, cost analysis, accessibility tracking, and vendor performance evaluation.
+
+---
+
+## 📊 Dataset Scale
+
+| Dataset | Records |
+|----------|---------:|
+| Visits | 60,146 |
+| Water Source | 39,650 |
+| Well Pollution | 17,383 |
+| Location | 39,650 |
+| Project Progress | 25,398 |
+| Water Source Related Crime | 77,226 |
+| MD Summary | 60,146 |
+| Vendors | 96 |
+| UN SDG Dashboard Data | 205 |
+| **Total Records** | **320,900** |
+
+### Business Significance
+
+The solution was built using more than 320K records distributed across multiple related datasets and optimized through Power Query transformations, DAX calculations, and semantic modeling.
+
+---
+
+# 🏗️ Data Model
+
+## Core Tables
+
+- project_progress
+- water_source
+- location
+- well_pollution
+- vendors
+- infrastructure_cost
+- water_source_related_crime
+- md_summary
+
+---
+
+# 🧮 Calculated Columns
+
+## 1. Budgeted Improvement Cost
+
+```DAX
+budgeted_improvement_cost =
+IF(
+    CONTAINSSTRING(
+        'project_progress'[town],
+        "Rural"
+    ),
+    RELATED('infrastructure_cost'[Rural_adjusted_cost]),
+    RELATED('infrastructure_cost'[unit_cost_USD])
+)
+```
+
+### Business Purpose
+
+Assigns the appropriate budget value depending on project location type and serves as the foundation for budget monitoring and cost variance analysis.
+
+---
+
+## 2. Project Duration Days
+
+```DAX
+project_duration_days =
+IF(
+    NOT(ISBLANK('project_progress'[date_started]))
+        && NOT(ISBLANK('project_progress'[date_of_completion])),
+    DATEDIFF(
+        'project_progress'[date_started],
+        'project_progress'[date_of_completion],
+        DAY
+    ),
+    BLANK()
+)
+```
+
+### Business Purpose
+
+Calculates delivery duration and supports Key Influencers and Top Segments analyses.
+
+---
+
+# 📊 Project Progress Measures
+
+## Total Improvements
+
+```DAX
+total_improvements =
+CALCULATE(
+    COUNTROWS('project_progress'),
+    ALLEXCEPT(
+        'project_progress',
+        'project_progress'[town]
+    )
+)
+```
+
+### Business Purpose
+
+Counts all planned projects while preserving town context.
+
+---
+
+## Number of Completed Projects
+
+```DAX
+number_completed_projects =
+CALCULATE(
+    COUNTROWS('project_progress'),
+    'project_progress'[source_status] = "Complete"
+)
+```
+
+### Business Purpose
+
+Counts completed improvement projects.
+
+### Validation Result
+
+29 completed projects at launch.
+
+---
+
+## Project Completion Percentage
+
+```DAX
+pct_project_complete =
+DIVIDE(
+    [number_completed_projects],
+    [total_improvements],
+    0
+)
+```
+
+### Business Purpose
+
+Measures project completion progress across towns, provinces, and the national programme.
+
+---
+
+## Sources To Go
+
+```DAX
+sources_to_go =
+[total_improvements] - [number_completed_projects]
+```
+
+### Business Purpose
+
+Calculates remaining unfinished improvements.
+
+---
+
+# 🌍 Water Accessibility Measures
+
+## Total Population
+
+```DAX
+total_population =
+SUM('water_source'[number_of_people_served])
+```
+
+### Business Purpose
+
+Returns the population served in the current report context.
+
+---
+
+## Population With Existing Basic Access
+
+```DAX
+Population_With_Basic_Access =
+CALCULATE(
+    SUM('water_source'[number_of_people_served]),
+    'water_source'[Basic_water_access] = "Basic Access"
+)
+```
+
+### Business Purpose
+
+Calculates people who already had access before programme implementation.
+
+---
+
+## Alternative Basic Access Measure
+
+```DAX
+population_with_basic_access_v2 =
+CALCULATE(
+    SUM('water_source'[number_of_people_served]),
+    FILTER(
+        ALL('water_source'),
+        OR(
+            OR(
+                AND(
+                    'water_source'[type_of_water_source] = "well",
+                    RELATED('well_pollution'[results]) = "Clean"
+                ),
+                'water_source'[type_of_water_source] = "tap_in_home"
+            ),
+            AND(
+                'water_source'[type_of_water_source] = "shared_tap",
+                'water_source'[Average_queue_time] < 30
+            )
+        )
+    )
+)
+```
+
+### Business Purpose
+
+Demonstrates an alternative measure-based approach for classifying basic water access.
+
+---
+
+## Population Newly Gaining Basic Access
+
+```DAX
+population_now_basic_access =
+CALCULATE(
+    SUM('water_source'[number_of_people_served]),
+    'project_progress'[source_status] = "Complete"
+)
+```
+
+### Business Purpose
+
+Calculates people benefiting from completed projects.
+
+### Validation Result
+
+10,760 people (~11K).
+
+---
+
+## Percentage of Population With Basic Access
+
+```DAX
+pct_population_now_basic_access =
+DIVIDE(
+    [Population_With_Basic_Access]
+        + [population_now_basic_access],
+    [total_population],
+    0
+)
+```
+
+### Business Purpose
+
+Measures population accessibility improvements over time.
+
+| Stage | Result |
+|---------|---------:|
+| Launch | 34% |
+| 2024 Update | 48% |
+| Final Completion | 100% |
+
+---
+
+# 💰 Budget & Cost Monitoring Measures
+
+## Cumulative Budget
+
+```DAX
+cumulative_budget =
+CALCULATE(
+    SUM('project_progress'[budgeted_improvement_cost]),
+    FILTER(
+        ALL('project_progress'[date_of_completion]),
+        'project_progress'[date_of_completion]
+            <= MAX('project_progress'[date_of_completion])
+            && NOT(
+                ISBLANK('project_progress'[date_of_completion])
+            )
+    )
+)
+```
+
+### Business Purpose
+
+Tracks cumulative approved budget throughout programme execution.
+
+---
+
+## Cumulative Actual Cost
+
+```DAX
+cumulative_cost =
+CALCULATE(
+    SUM('project_progress'[cost]),
+    FILTER(
+        ALL('project_progress'[date_of_completion]),
+        'project_progress'[date_of_completion]
+            <= MAX('project_progress'[date_of_completion])
+            && NOT(
+                ISBLANK('project_progress'[date_of_completion])
+            )
+    )
+)
+```
+
+### Business Purpose
+
+Tracks cumulative project expenditure.
+
+---
+
+## Budget Variance Percentage
+
+```DAX
+budget_variance_pct =
+DIVIDE(
+    [cumulative_cost] - [cumulative_budget],
+    [cumulative_budget],
+    0
+)
+```
+
+### Business Purpose
+
+Measures actual spending against approved budget.
+
+| Stage | Variance |
+|---------|---------:|
+| Launch | 2.70% |
+| 2024 | 10.69% |
+| Final | 5.29% |
+
+---
+
+## Average Cost Variance Percentage
+
+```DAX
+average_cost_variance_pct =
+DIVIDE(
+    AVERAGE('project_progress'[cost])
+        - AVERAGE('project_progress'[budgeted_improvement_cost]),
+    AVERAGE('project_progress'[budgeted_improvement_cost]),
+    0
+)
+```
+
+### Business Purpose
+
+Measures average project over-budget performance within any selected context.
+
+### Example
+
+| Metric | Value |
+|---------|---------:|
+| Average Cost | $9,152 |
+| Average Budget | $8,125 |
+| Variance | 12.6% |
+
+---
+
+# 🛠️ Skills Demonstrated
+
+`DAX` • `Power BI` • `Power Query` • `Data Modeling` • `Relationship Management` • `Filter Context` • `KPI Development` 
+• `Budget Monitoring` • `Cost Analysis` • `Vendor Analytics` • `Key Influencers` • `Top Segments` • `Interactive Reporting`
