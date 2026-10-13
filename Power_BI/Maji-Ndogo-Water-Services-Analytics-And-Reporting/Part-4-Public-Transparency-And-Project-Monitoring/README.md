@@ -1,184 +1,288 @@
-# 📡 Part 4: Public Transparency & Project Monitoring
+# 📊 Part 4: Public Transparency & Project Monitoring
 
 ## 📌 Overview
 
-This phase focused on monitoring the implementation of the Maji Ndogo Water Improvement Project after construction activities began.
+This phase focused on monitoring the national water improvement programme from initial rollout through full completion while providing transparency for citizens and actionable insights for decision-makers.
 
-Using Power BI, a public transparency dashboard was developed to track project completion, monitor spending, evaluate budget performance, measure improvements in basic water access, and provide visibility into the work being performed across Maji Ndogo.
+Using Power BI, interactive dashboards were developed to track project progress, measure improvements in water accessibility, monitor actual spending against budget, evaluate vendor performance, and identify factors influencing project cost throughout the programme lifecycle.
 
-**Goal: provide transparency for citizens and support project monitoring for decision-makers.**
+The dashboard was built on **320,900 records across 9 interconnected datasets**, covering water accessibility, water quality, operational visits, infrastructure projects, vendor performance, crime-related service data, and SDG indicators.
 
----
-
-## 💰 Business Problem
-
-After the project moved from planning to implementation, stakeholders needed answers to critical questions:
-
-- How far has the project progressed?
-- How much money has been spent?
-- Where has the money been spent?
-- What improvements have been completed?
-- Is the project staying within budget?
-- Are improvement teams performing efficiently?
-- How many citizens have benefited from the upgrades?
-
-The objective was to create a dashboard that served both the public and decision-makers.
+**Goal: provide transparency, monitor programme performance, and support data-driven infrastructure decisions.**
 
 ---
 
-## 🗺️ Project Progress Dashboard
+## 🎯 Business Problem
 
-### Visuals
+Decision-makers and citizens needed answers to critical monitoring questions:
 
-- Project Progress Map
-- Project Completion KPI
-- Sources Remaining KPI
-- People Helped KPI
-- Basic Water Access KPI
-- Provincial Project Status
+- How much progress has been made since programme launch?
+- How many people have gained access to safe water?
+- Are projects being completed on schedule?
+- Is spending aligned with budget expectations?
+- Which provinces require closer monitoring?
+- Which factors drive project cost increases?
+- How can vendor performance be evaluated fairly?
+
+The objective was to build a public-facing monitoring system that provides accountability while supporting operational decision-making.
+
+---
+
+## 📊 Public Monitoring Dashboard
+
+### Dashboard Pages
+
+- National Monitoring Dashboard
+- Cost Analysis Dashboard
+- Cost Breakdown Dashboard
+- Vendor Performance Dashboard
+
+### Core KPIs
+
+- People Helped
+- Basic Water Access %
+- Projects Completed %
+- Sources To Go
+- Actual Cost
+- Budget
+- Budget Variance %
+
+---
+
+## 🟢 Stage 1: Initial Launch (2022–2023)
 
 ### Key Insights
 
-- Project progress can be monitored at national, provincial, and town levels.
-- Completion percentages update dynamically as projects are completed.
-- Geographic visualization highlights areas where upgrades have already been completed.
-- Decision-makers can identify regions with slower implementation progress.
-- Remaining sources can be tracked throughout the project lifecycle.
+- Basic Water Access: **34%**
+- Projects Completed: **0%**
+- People Helped: **11K**
+- Sources Remaining: **25K**
+- Actual Cost: **$131.9K**
+- Budget: **$128.5K**
+- Budget Variance: **2.70%**
 
 ### Analysis Outcome
 
-The dashboard provides visibility into implementation progress and helps stakeholders identify where additional resources may be required.
+The programme was still at the beginning of implementation. While only 29 projects had been completed, early improvements had already started delivering measurable benefits. Initial spending remained relatively close to budget expectations.
 
 ---
 
-## 🚰 Water Access Impact Dashboard
-
-### Visuals
-
-- Updated Basic Water Access KPI
-- Population Improved KPI
-- Provincial Water Access Comparison
-- Improvement Impact Tracking
+## 🟡 Stage 2: One-Year Update (2024)
 
 ### Key Insights
 
-- Basic water access improves as completed projects are brought online.
-- Newly upgraded sources immediately contribute to improved water accessibility.
-- Population impact can be measured over time.
-- Improvements can be evaluated at national, provincial, and town levels.
+- Basic Water Access increased from **34% to 48%**
+- Project Completion increased to **22%**
+- People Helped increased from **11K to 4M**
+- Remaining Improvements decreased from **25K to 20K**
+- Actual Cost reached **$33.79M**
+- Budget reached **$30.52M**
+- Budget Variance increased to **10.69%**
+- Sokoto accounted for the highest expenditure share (**32.84%**)
+
+### Cost Breakdown
+
+- Install RO Filter: **$14.3M**
+- Install Public Taps: **$9.4M**
+- Drill Well: **$7.7M**
+- Install UV & RO Filter: **$1.7M**
+- Repair Infrastructure: **$0.7M**
 
 ### Analysis Outcome
 
-The dashboard connects infrastructure improvements directly to citizen outcomes and demonstrates the real-world impact of the project.
+The programme demonstrated significant progress in accessibility and population impact. However, spending began exceeding planned budgets, highlighting the need for closer cost monitoring and resource optimization.
 
 ---
 
-## 💵 Budget Monitoring Dashboard
-
-### Visuals
-
-- Cumulative Budget KPI
-- Cumulative Cost KPI
-- Cost vs Budget Trend
-- Budget Deficit / Surplus Indicator
+## 🔵 Stage 3: Final Programme Completion (2027)
 
 ### Key Insights
 
-- Actual spending can be monitored against planned budgets in real time.
-- Running cost analysis highlights spending trends throughout the project.
-- Budget performance can be analyzed across different completion periods.
-- Cost overruns can be identified early before they become critical risks.
+- Basic Water Access reached **100%**
+- Project Completion reached **100%**
+- People Helped reached **18M**
+- Sources Remaining reduced to **0**
+- Actual Cost reached **$154.49M**
+- Budget reached **$146.74M**
+- Budget Variance improved to **5.29%**
+
+### Final Expenditure by Improvement Type
+
+| Improvement Type | Final Expenditure |
+|------------------|------------------:|
+| Install Public Taps | $45M |
+| Install RO Filter | $42M |
+| Drill Well | $41M |
+| Install UV & RO Filter | $23M |
+| Repair Infrastructure | $3M |
+
+### Final Expenditure by Province
+
+| Province | Expenditure | Share |
+|----------|------------:|------:|
+| Sokoto | $44.85M | 29.03% |
+| Kilimani | $40.34M | 26.11% |
+| Akatsi | $32.03M | 20.73% |
+| Hawassa | $23.24M | 15.04% |
+| Amanzi | $14.03M | 9.08% |
 
 ### Analysis Outcome
 
-Budget monitoring helps stakeholders evaluate financial performance and determine whether corrective action is necessary.
+The programme successfully completed all planned improvements and achieved universal basic water access across Maji Ndogo. Although total expenditure exceeded budget, overall cost control improved significantly compared to the one-year update.
 
 ---
 
-## 📊 Cost Breakdown Dashboard
-
-### Visuals
-
-- Cost by Province
-- Cost by Improvement Type
-- Cost Distribution Analysis
-- Provincial Spending Comparison
+## 💰 Cost Analysis
 
 ### Key Insights
 
-- Spending varies significantly by province.
-- Different improvement categories contribute differently to total project costs.
-- Water treatment and infrastructure projects account for a large share of expenditure.
-- Provincial cost analysis helps identify high-investment regions.
+#### 2024 Cost Drivers
+
+- Project Duration (+$6.09K)
+- Install Public Taps (+$5.32K)
+- Rural Sokoto (+$4.72K)
+- Rural Location (+$4.40K)
+- Rural Akatsi (+$3.59K)
+- Drill Well (+$3.53K)
+
+#### 2027 Cost Drivers
+
+- Project Duration (+$7.36K)
+- Install Public Taps (+$7.03K)
+- Rural Location (+$6.12K)
+- Rural Sokoto (+$4.73K)
+- Rural Akatsi (+$3.92K)
+- Rural Kilimani (+$3.28K)
+
+### Top Cost Segments
+
+#### 2024
+
+Highest-cost segment:
+
+- Rural projects
+- Duration greater than 21 days
+- Average Cost: **$20.8K**
+
+#### 2027
+
+Highest-cost segment:
+
+- Rural projects
+- Duration greater than 35 days
+- Average Cost: **$24.38K**
+- Difference from overall average: **$14.57K**
 
 ### Analysis Outcome
 
-Cost transparency allows stakeholders to understand how project funds are allocated and where resources are being spent.
+Project duration consistently remained the strongest cost driver throughout programme execution. Rural operating conditions, especially in Sokoto, significantly increased project costs and highlighted the importance of context-based budgeting.
 
 ---
 
-## 🏗️ Vendor Performance Analysis
+## 🏆 Vendor Performance Analysis
 
-### Visuals
+### Initial Vendor Ranking
 
-- Vendor Cost Comparison
-- Vendor Performance Analysis
-- Improvement Type Comparison
-- Geographic Vendor Analysis
+| Vendor | Average Cost | Completed Projects |
+|---------|------------:|------------------:|
+| Entebbe RO Installers | $6.90K | 192 |
+| Ouagadougou Waterworks | $6.09K | 111 |
+
+At first glance, Entebbe appeared more expensive.
+
+### Context-Based Comparison
+
+Filters Applied:
+
+- Install RO Filter
+- Rural
+- Sokoto
+
+| Vendor | Average Cost | Completed Projects |
+|---------|------------:|------------------:|
+| Ouagadougou Waterworks | $7.44K | 13 |
+| Entebbe RO Installers | $6.90K | 192 |
 
 ### Key Insights
 
-- Raw vendor costs alone do not accurately measure performance.
-- Cost differences are influenced by location, project type, and operating conditions.
-- Rural projects are significantly more expensive than urban projects.
-- Sokoto and Kilimani exhibit some of the highest implementation costs.
-- Vendor performance should be evaluated within the context of the work being performed.
+- Entebbe became the lower-cost vendor after controlling for operating conditions.
+- Entebbe completed significantly more projects.
+- Geography and project mix strongly influenced vendor rankings.
+- National averages alone produced misleading conclusions.
 
 ### Analysis Outcome
 
-The analysis demonstrates the importance of contextual evaluation when comparing contractors and infrastructure teams.
+Vendor performance must be evaluated within comparable operating environments rather than through simple national averages.
 
 ---
 
-## 📅 One-Year Project Update
+## ⚙️ DAX Measures & Data Modeling
 
-### Key Insights
+The dashboard relied on custom DAX measures, calculated columns, relationship management, and business logic to support project monitoring, accessibility tracking, budget analysis, and vendor evaluation.
 
-- Basic Water Access increased from approximately **34%** to **48%** after one year of implementation.
-- Project completion reached approximately **22%**.
-- The project remains in progress, with significant work still remaining.
-- Spending trends indicate that some activities are costing more than originally estimated.
-- Sokoto contributes heavily to budget overruns due to difficult operating conditions and well-drilling requirements. 【1-8adf2d】
+### Key DAX Measures
 
-### Analysis Outcome
+- Total Improvements
+- Number of Completed Projects
+- Project Completion Percentage
+- Sources To Go
+- Total Population
+- Population With Existing Basic Access
+- Population Newly Gaining Basic Access
+- Percentage Of Population With Basic Access
+- Cumulative Budget
+- Cumulative Actual Cost
+- Budget Variance Percentage
+- Average Cost Variance Percentage
 
-The one-year update demonstrates the value of continuous monitoring and provides stakeholders with evidence of both project achievements and emerging risks. 【1-8adf2d】
+### Key Calculated Columns
+
+- Budgeted Improvement Cost
+- Project Duration Days
+
+📄 Full technical documentation is available in:
+
+**DAX-Measures-And-Modeling.md**
 
 ---
 
 ## 💡 Strategic Findings
 
-- Project monitoring is as important as project planning.
-- Budget tracking helps identify financial risks early.
-- Geographic conditions strongly influence implementation costs.
-- Rural improvements are significantly more expensive than urban improvements.
-- Project success should be measured through both financial and social impact indicators.
-- Vendor evaluation requires context rather than simple cost comparisons.
-- Data-driven monitoring supports better long-term decision-making.
+- Rural projects consistently cost more than urban projects.
+- Project duration was the strongest cost driver throughout the programme.
+- Public tap installations represented one of the most expensive improvement categories.
+- Geographic conditions significantly influenced project expenditure.
+- Vendor rankings can become misleading when contextual factors are ignored.
+- Monitoring budget variance over time provides stronger decision support than evaluating final costs alone.
+- Data transparency improves accountability and governance.
 
 ---
 
 ## ✅ Part 4 Takeaway
 
-This phase transformed the Maji Ndogo project from a planning exercise into a transparent monitoring and accountability framework.
+This phase transformed project data into a comprehensive monitoring and transparency solution.
 
-By combining project progress tracking, budget monitoring, population impact analysis, and vendor evaluation, the dashboard enables both citizens and decision-makers to understand how resources are being used and how infrastructure investments are improving access to water across Maji Ndogo. 【1-8adf2d】
+By combining project progress tracking, accessibility monitoring, budget analysis, cost-driver investigation, vendor evaluation, and geographic reporting, stakeholders gained a complete view of programme performance throughout the implementation lifecycle.
+
+The final programme achieved:
+
+- **100% Basic Water Access**
+- **100% Project Completion**
+- **0 Remaining Sources**
+- **18 Million People Helped**
+
+The project also demonstrated an important analytical lesson:
+
+**Context changes conclusions.**
+
+A vendor that appeared expensive at a national level became one of the most efficient providers when evaluated under equivalent operating conditions.
 
 ---
 
 ## 🛠️ Skills Demonstrated
 
-`Power BI` • `DAX` • `KPI Development` • `Project Monitoring` • `Budget Analysis` • `Vendor Performance Analysis` • `Geographic Reporting` • `Interactive Dashboards` • `Drill-through Reporting` • `Data Storytelling`
+`Power BI` • `Power Query` • `DAX` • `Data Modeling` • `Relationship Management` • `KPI Development` • `Budget Monitoring` • `Cost Analysis` • `Vendor Analytics` • `Key Influencers` • `Top Segments` • `Interactive Reporting` • `Shape Maps` • `Data Storytelling`
+
 
 ---
 
