@@ -4,16 +4,21 @@
 
 This project presents an end-to-end SQL analysis of water services in Maji Ndogo, moving from database exploration and data cleaning to water-access analysis, audit investigation, and infrastructure planning.
 
+Before beginning the analytical workflow, the database environment is initialized using the provided SQL dump, entity relationship diagram (ERD), and supporting audit dataset.
+
 The project is organized into four connected analytical stages:
 
-1. **Data Exploration & Cleaning**
-2. **Water Access & Queue Analysis**
-3. **Data Integrity & Audit Investigation**
-4. **Infrastructure Improvement Strategy**
+| Part | Focus |
+|---|---|
+| 00 | Database Setup & Environment Preparation |
+| 01 | Data Exploration & Cleaning |
+| 02 | Water Access & Queue Analysis |
+| 03 | Data Integrity & Audit Investigation |
+| 04 | Infrastructure Improvement Strategy |
 
 The overall workflow is:
 
-**Explore → Clean → Analyze → Validate → Prioritize → Act**
+**Setup → Explore → Clean → Analyze → Validate → Prioritize → Act**
 
 ---
 
@@ -35,6 +40,7 @@ The analysis focuses on the following questions:
 
 | Part | Focus | Documentation |
 |---|---|---|
+| **00** | 🗄️ Database Setup & Environment Preparation | [View Part 0](../Part-0-Database-Setup) |
 | **01** | 🔎 Data Exploration & Cleaning | [View Part 1](../Part-1-Data-Exploration-and-Cleaning) |
 | **02** | 📊 Water Access & Queue Analysis | [View Part 2](../Part-2-Water-Access-Analysis) |
 | **03** | 🕵️ Data Integrity & Audit Investigation | [View Part 3](../Part-3-Audit-Investigation) |
@@ -164,6 +170,10 @@ SQL/
     │
     ├── Overview/
     │   └── README.md
+    │
+    ├── Part-0-Database-Setup/
+    │   ├── README.md
+    │   └── Maji_Ndogo_ERD.png
     │
     ├── Raw-Data/
     │   ├── md_water_services.sql
