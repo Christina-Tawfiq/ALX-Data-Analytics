@@ -166,7 +166,7 @@ SQL/
     │   └── README.md
     │
     ├── Raw-Data/
-    │   ├── Md_water_services_data.xlsx
+    │   ├── md_water_services.sql
     │   ├── Data_dictionary.pdf
     │   ├── Auditor_report.csv
     │   └── Data dictionary_ auditor_report.pdf
