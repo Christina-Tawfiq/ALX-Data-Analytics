@@ -7,8 +7,6 @@ Part 2 transforms the JMP country-year dataset to investigate how at-least-basic
 The objective is to move beyond a single-year access snapshot and determine whether drinking-water access is improving, stagnating, or declining, while accounting for unequal observation intervals and countries already at full access.
 
 ## Part 2 Files
-
-- [View Part 2 – TRANSFORMING DATA – Google Sheets](https://docs.google.com/spreadsheets/d/14j_BLFagojlPHK0S3b5W8C0IQHYjBErq_cFmQGQQTJo/edit?usp=sharing)
   
 - [Raw Data](./Raw-Data/)  WHO/UNICEF JMP Estimates on the Use of Water time-series dataset.
 - [Analyzed Data](./Analyzed-Data/) TRANSFORMING DATA
