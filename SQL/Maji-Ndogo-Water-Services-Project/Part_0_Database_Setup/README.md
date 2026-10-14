@@ -68,13 +68,13 @@ The ERD illustrates the relationships between operational, quality, pollution, l
 ```text
 Part 0 → Database Setup & Environment Preparation
 
-Part 1 → Data Exploration
+Part 1 → Data Exploration & Cleaning
 
-Part 2 → Data Cleaning & Analysis
+Part 2 → Water Access & Queue Analysis
 
-Part 3 → Audit Investigation & Corruption Detection
+Part 3 → Data Integrity & Audit Investigation
 
-Part 4 → Strategic Recommendations & Action Planning
+Part 4 → Infrastructure Improvement Strategy
 ```
 
 ## Prerequisites
