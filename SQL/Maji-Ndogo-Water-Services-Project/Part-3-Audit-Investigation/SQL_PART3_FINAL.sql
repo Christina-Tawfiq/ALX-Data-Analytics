@@ -1,7 +1,6 @@
 /*
   Maji Ndogo Water Services - Part 3
   Auditor comparison and data-integrity investigation
-  Corrected and documented version
 
   The auditor_report data dictionary states that the auditor re-visited
   a randomly selected subset of 1,620 records to re-record quality scores.
