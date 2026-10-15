@@ -211,4 +211,4 @@ The final result is a structured data-analysis project that connects technical S
 ## 👩‍💻 Author
 
 **Christina Tawfiq**  
-SQL Data Analysis Portfolio Project
+SQL Data Analysis 
