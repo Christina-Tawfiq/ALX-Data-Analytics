@@ -1,7 +1,6 @@
 /*
   Maji Ndogo Water Services - Part 2
   Employee cleanup, geographic analysis, source prioritisation, and queues
-  Corrected and documented version
 */
 
 -- ============================================================
