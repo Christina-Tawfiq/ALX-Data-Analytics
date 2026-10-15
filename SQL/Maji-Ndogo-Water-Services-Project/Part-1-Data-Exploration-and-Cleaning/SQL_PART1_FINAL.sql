@@ -1,7 +1,6 @@
 /*
   Maji Ndogo Water Services - Part 1
   Data exploration, validation, and cleaning
-  Corrected and documented version
 */
 
 -- ============================================================
