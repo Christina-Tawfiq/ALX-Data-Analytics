@@ -1,7 +1,6 @@
 /*
   Maji Ndogo Water Services - Part 4
   Combined analysis, geographic prioritisation, and project planning
-  Corrected and documented version
 */
 
 -- ============================================================
